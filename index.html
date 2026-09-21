@@ -436,7 +436,12 @@ status.textContent="Payment details received. Verification is required before ap
 </script>
   <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyC8-pN9Jg4BX0H9O2sHsY_wHjjr_iXexok",
@@ -449,7 +454,11 @@ status.textContent="Payment details received. Verification is required before ap
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  </script>
 
+  window.firebaseDb = db;
+  window.firebaseAddDoc = addDoc;
+  window.firebaseCollection = collection;
+  window.firebaseServerTimestamp = serverTimestamp;
+</script>
 </body>
   </html>
