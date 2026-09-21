@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CARDING Admin</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#070707;
+  color:#fff;
+}
+
+.container{
+  width:92%;
+  max-width:900px;
+  margin:auto;
+}
+
+header{
+  padding:22px 0;
+  border-bottom:1px solid #222;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:6px;
+}
+
+.logo span{
+  color:#d6b45b;
+}
+
+h1{
+  margin-top:35px;
+}
+
+.application{
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:18px;
+  padding:22px;
+  margin:20px 0;
+}
+
+.row{
+  margin:9px 0;
+}
+
+.label{
+  color:#999;
+  font-size:13px;
+}
+
+.value{
+  margin-top:3px;
+  font-size:16px;
+  word-break:break-word;
+}
+
+.status{
+  display:inline-block;
+  margin-top:15px;
+  padding:8px 14px;
+  border-radius:20px;
+  background:#332b16;
+  color:#d6b45b;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  margin:15px 8px 0 0;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.approve{
+  background:#d6b45b;
+  color:#000;
+}
+
+.reject{
+  background:#8b2020;
+  color:#fff;
+}
+
+.empty{
+  color:#999;
+  margin-top:30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container">
+<div class="logo">CARD<span>ING</span> ADMIN</div>
+</div>
+</header>
+
+<main class="container">
+
+<h1>Applications</h1>
+
+<div id="applications">
+<p class="empty">Loading applications...</p>
+</div>
+
+</main>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  query,
+  orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyC8-pN9Jg4BXOH9dHsWyH_wHjjr_iXekox",
+
+  authDomain: "carding-website-87a10.firebaseapp.com",
+
+  projectId: "carding-website-87a10",
+
+  storageBucket: "carding-website-87a10.firebasestorage.app",
+
+  messagingSenderId: "1058006993928",
+
+  appId: "1:1058006993928:web:cb43cd346e42d256655"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const applicationsBox =
+document.getElementById("applications");
+
+
+async function loadApplications(){
+
+  applicationsBox.innerHTML =
+  '<p class="empty">Loading...</p>';
+
+  try{
+
+    const q = query(
+      collection(db,"applications"),
+      orderBy("createdAt","desc")
+    );
+
+    const snapshot = await getDocs(q);
+
+    if(snapshot.empty){
+
+      applicationsBox.innerHTML =
+      '<p class="empty">No applications found.</p>';
+
+      return;
+    }
+
+    applicationsBox.innerHTML = "";
+
+    snapshot.forEach((item)=>{
+
+      const data = item.data();
+
+      const application =
+      document.createElement("div");
+
+      application.className = "application";
+
+      const status =
+      data.status || "Pending";
+
+      application.innerHTML = `
+
+        <div class="row">
+          <div class="label">Name</div>
+          <div class="value">
+            ${data.name || ""}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label">Email</div>
+          <div class="value">
+            ${data.email || ""}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label">Mobile</div>
+          <div class="value">
+            ${data.mobile || ""}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label">Card</div>
+          <div class="value">
+            ${data.card || ""}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label">Application ID</div>
+          <div class="value">
+            ${item.id}
+          </div>
+        </div>
+
+        <div class="status">
+          Status: ${status}
+        </div>
+
+        <br>
+
+        <button
+          class="approve"
+          onclick="changeStatus('${item.id}','Approved')">
+          APPROVE
+        </button>
+
+        <button
+          class="reject"
+          onclick="changeStatus('${item.id}','Rejected')">
+          REJECT
+        </button>
+
+      `;
+
+      applicationsBox.appendChild(application);
+
+    });
+
+  }catch(error){
+
+    console.error(error);
+
+    applicationsBox.innerHTML = `
+      <p class="empty">
+        Error loading applications.
+        Check Firebase Firestore rules.
+      </p>
+    `;
+
+  }
+
+}
+
+
+window.changeStatus = async function(
+  applicationId,
+  newStatus
+){
+
+  try{
+
+    await updateDoc(
+      doc(db,"applications",applicationId),
+      {
+        status:newStatus
+      }
+    );
+
+    alert(
+      "Application " +
+      newStatus
+    );
+
+    loadApplications();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Update failed. Check Firebase rules."
+    );
+
+  }
+
+};
+
+
+loadApplications();
+
+</script>
+
+</body>
+</html>
