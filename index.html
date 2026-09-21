@@ -97,7 +97,7 @@ label{font-size:13px;color:#aaa}footer{padding:30px 0;border-top:1px solid rgba(
 <label for="mobile">Mobile</label><input id="mobile" name="mobile" type="tel" placeholder="+91" required>
 <label for="card">Card</label><select id="card" name="card" required><option value="Signature">Signature</option><option value="Elite">Elite</option><option value="Everyday">Everyday</option></select>
 <input type="hidden" name="_subject" value="New CARDING Card Application">
-<button class="btn" type="submit">Submit Application</button>
+<button class="btn" type="submit" onclick="showApplicationFee()">Submit Application</button>
 </form>
 <div class="note">Applications are sent securely to the configured business email through Formspree. Do not collect card numbers, CVV, PINs, OTPs or passwords here. Connect to an authorized issuer/backend before accepting real card applications.</div>
 </div></div></section>
@@ -151,4 +151,38 @@ label{font-size:13px;color:#aaa}footer{padding:30px 0;border-top:1px solid rgba(
   </div>
 </section>
 <footer class="container"><span>© 2026 CARDING. All rights reserved.</span><span>Premium • Secure • Transparent</span></footer>
+  <section id="application-fee" class="container" style="display:none;">
+  <div class="card" style="max-width:500px;margin:auto;text-align:center;">
+    <div class="cardbody">
+      <div class="eyebrow">APPLICATION FEE</div>
+      <h2>Pay ₹29 Application Fee</h2>
+      <p>Complete the application fee to continue.</p>
+
+      <div style="font-size:42px;font-weight:800;margin:20px 0;">
+        ₹29
+      </div>
+
+      <button class="btn" onclick="showPaymentMessage()">
+        Pay ₹29
+      </button>
+
+      <p id="payment-message" style="display:none;margin-top:20px;">
+        Payment gateway connection required for real payment confirmation.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+function showApplicationFee() {
+  document.getElementById("application-fee").style.display = "block";
+  document.getElementById("application-fee").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+function showPaymentMessage() {
+  document.getElementById("payment-message").style.display = "block";
+}
+</script>
 </body></html>
