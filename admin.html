@@ -43,6 +43,55 @@ h1{
   margin-top:35px;
 }
 
+.box{
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:18px;
+  padding:22px;
+  margin:25px 0;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid #333;
+  background:#080808;
+  color:#fff;
+  outline:none;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  margin:12px 8px 0 0;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.login-btn{
+  width:100%;
+  background:#d6b45b;
+  color:#000;
+}
+
+.logout{
+  background:#333;
+  color:#fff;
+}
+
+.approve{
+  background:#d6b45b;
+  color:#000;
+}
+
+.reject{
+  background:#8b2020;
+  color:#fff;
+}
+
 .application{
   background:#101010;
   border:1px solid #292929;
@@ -75,28 +124,26 @@ h1{
   color:#d6b45b;
 }
 
-button{
-  border:0;
-  border-radius:10px;
-  padding:12px 18px;
-  margin:15px 8px 0 0;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.approve{
-  background:#d6b45b;
-  color:#000;
-}
-
-.reject{
-  background:#8b2020;
-  color:#fff;
-}
-
 .empty{
   color:#999;
   margin-top:30px;
+}
+
+.error{
+  color:#ff6b6b;
+  margin-top:10px;
+}
+
+.hidden{
+  display:none;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
 </style>
 </head>
@@ -111,10 +158,61 @@ button{
 
 <main class="container">
 
+<!-- LOGIN -->
+<div id="loginBox" class="box">
+
+<h1>Admin Login</h1>
+
+<p style="color:#999">
+Sign in with your authorized admin account.
+</p>
+
+<input
+  type="email"
+  id="email"
+  placeholder="Admin Email"
+  autocomplete="email"
+>
+
+<input
+  type="password"
+  id="password"
+  placeholder="Password"
+  autocomplete="current-password"
+>
+
+<button
+  class="login-btn"
+  id="loginBtn"
+  type="button">
+  LOGIN
+</button>
+
+<p id="loginStatus" class="error"></p>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="hidden">
+
+<div class="topbar">
+
 <h1>Applications</h1>
+
+<button
+  class="logout"
+  id="logoutBtn"
+  type="button">
+  LOGOUT
+</button>
+
+</div>
 
 <div id="applications">
 <p class="empty">Loading applications...</p>
+</div>
+
 </div>
 
 </main>
@@ -122,19 +220,24 @@ button{
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
   getFirestore,
   collection,
   getDocs,
   doc,
-  updateDoc,
-  query,
-  orderBy
-}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -147,34 +250,144 @@ const firebaseConfig = {
 
   storageBucket: "carding-website-87a10.firebasestorage.app",
 
-  messagingSenderId: "1058006993928",
+  messagingSenderId: "105806699328",
 
-  appId: "1:1058006993928:web:cb43cd346e42d256655"
+  appId: "1:105806699328:web:cb43d3d46e42d256655"
 
 };
 
 
 const app = initializeApp(firebaseConfig);
 
+const auth = getAuth(app);
+
 const db = getFirestore(app);
+
+
+const loginBox =
+document.getElementById("loginBox");
+
+const adminPanel =
+document.getElementById("adminPanel");
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+const loginStatus =
+document.getElementById("loginStatus");
 
 const applicationsBox =
 document.getElementById("applications");
 
 
-async function loadApplications(){
+const ADMIN_EMAIL =
+"professionalcard79@gmail.com";
 
-  applicationsBox.innerHTML =
-  '<p class="empty">Loading...</p>';
+
+/* LOGIN */
+
+loginBtn.addEventListener("click", async () => {
+
+  const email =
+  document.getElementById("email").value.trim();
+
+  const password =
+  document.getElementById("password").value;
+
+  loginStatus.textContent = "";
+
+  if(!email || !password){
+
+    loginStatus.textContent =
+    "Please enter email and password.";
+
+    return;
+  }
+
+  loginBtn.disabled = true;
+  loginBtn.textContent = "LOGGING IN...";
 
   try{
 
-    const q = query(
-      collection(db,"applications"),
-      orderBy("createdAt","desc")
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
     );
 
-    const snapshot = await getDocs(q);
+  }catch(error){
+
+    console.error(error);
+
+    loginStatus.textContent =
+    "Login failed. Check your email and password.";
+
+  }
+
+  loginBtn.disabled = false;
+  loginBtn.textContent = "LOGIN";
+
+});
+
+
+/* AUTH CHECK */
+
+onAuthStateChanged(auth, async (user) => {
+
+  if(!user){
+
+    loginBox.classList.remove("hidden");
+    adminPanel.classList.add("hidden");
+
+    return;
+  }
+
+
+  if(user.email !== ADMIN_EMAIL){
+
+    await signOut(auth);
+
+    loginStatus.textContent =
+    "This account is not authorized.";
+
+    return;
+  }
+
+
+  loginBox.classList.add("hidden");
+  adminPanel.classList.remove("hidden");
+
+  loadApplications();
+
+});
+
+
+/* LOGOUT */
+
+logoutBtn.addEventListener("click", async () => {
+
+  await signOut(auth);
+
+});
+
+
+/* LOAD APPLICATIONS */
+
+async function loadApplications(){
+
+  applicationsBox.innerHTML =
+  '<p class="empty">Loading applications...</p>';
+
+  try{
+
+    const snapshot =
+    await getDocs(
+      collection(db,"applications")
+    );
+
 
     if(snapshot.empty){
 
@@ -184,59 +397,89 @@ async function loadApplications(){
       return;
     }
 
+
     applicationsBox.innerHTML = "";
 
-    snapshot.forEach((item)=>{
 
-      const data = item.data();
+    const applications = [];
+
+    snapshot.forEach((item) => {
+
+      applications.push({
+        id:item.id,
+        data:item.data()
+      });
+
+    });
+
+
+    applications.sort((a,b) => {
+
+      const aTime =
+      a.data.createdAt?.seconds || 0;
+
+      const bTime =
+      b.data.createdAt?.seconds || 0;
+
+      return bTime - aTime;
+
+    });
+
+
+    applications.forEach((item) => {
+
+      const data = item.data;
 
       const application =
       document.createElement("div");
 
-      application.className = "application";
+      application.className =
+      "application";
+
 
       const status =
       data.status || "Pending";
+
 
       application.innerHTML = `
 
         <div class="row">
           <div class="label">Name</div>
           <div class="value">
-            ${data.name || ""}
+            ${escapeHtml(data.name || "")}
           </div>
         </div>
 
         <div class="row">
           <div class="label">Email</div>
           <div class="value">
-            ${data.email || ""}
+            ${escapeHtml(data.email || "")}
           </div>
         </div>
 
         <div class="row">
           <div class="label">Mobile</div>
           <div class="value">
-            ${data.mobile || ""}
+            ${escapeHtml(data.mobile || "")}
           </div>
         </div>
 
         <div class="row">
           <div class="label">Card</div>
           <div class="value">
-            ${data.card || ""}
+            ${escapeHtml(data.card || "")}
           </div>
         </div>
 
         <div class="row">
           <div class="label">Application ID</div>
           <div class="value">
-            ${item.id}
+            ${escapeHtml(item.id)}
           </div>
         </div>
 
         <div class="status">
-          Status: ${status}
+          Status: ${escapeHtml(status)}
         </div>
 
         <br>
@@ -255,18 +498,20 @@ async function loadApplications(){
 
       `;
 
+
       applicationsBox.appendChild(application);
 
     });
+
 
   }catch(error){
 
     console.error(error);
 
     applicationsBox.innerHTML = `
-      <p class="empty">
+      <p class="error">
         Error loading applications.
-        Check Firebase Firestore rules.
+        Please check Firebase Authentication and Firestore Rules.
       </p>
     `;
 
@@ -274,6 +519,8 @@ async function loadApplications(){
 
 }
 
+
+/* APPROVE / REJECT */
 
 window.changeStatus = async function(
   applicationId,
@@ -283,25 +530,33 @@ window.changeStatus = async function(
   try{
 
     await updateDoc(
-      doc(db,"applications",applicationId),
+      doc(
+        db,
+        "applications",
+        applicationId
+      ),
       {
         status:newStatus
       }
     );
 
+
     alert(
       "Application " +
-      newStatus
+      newStatus +
+      " successfully."
     );
 
+
     loadApplications();
+
 
   }catch(error){
 
     console.error(error);
 
     alert(
-      "Update failed. Check Firebase rules."
+      "Update failed. Please check Firebase rules."
     );
 
   }
@@ -309,7 +564,18 @@ window.changeStatus = async function(
 };
 
 
-loadApplications();
+/* SECURITY */
+
+function escapeHtml(value){
+
+  return String(value)
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
 
 </script>
 
