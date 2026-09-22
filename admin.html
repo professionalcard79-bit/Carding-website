@@ -73,7 +73,6 @@ button{
 
 button:disabled{
   opacity:.6;
-  cursor:not-allowed;
 }
 
 .login-btn{
@@ -140,11 +139,6 @@ button:disabled{
   word-break:break-word;
 }
 
-.success{
-  color:#7ee787;
-  margin-top:10px;
-}
-
 .hidden{
   display:none;
 }
@@ -156,7 +150,6 @@ button:disabled{
   gap:10px;
   flex-wrap:wrap;
 }
-
 </style>
 </head>
 
@@ -168,11 +161,9 @@ button:disabled{
 </div>
 </header>
 
-
 <main class="container">
 
-
-<!-- LOGIN BOX -->
+<!-- LOGIN -->
 
 <div id="loginBox" class="box">
 
@@ -231,7 +222,6 @@ Sign in with your authorized admin account.
 
 </div>
 
-
 </main>
 
 
@@ -257,12 +247,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* FIREBASE CONFIG */
+/* CORRECT FIREBASE CONFIG */
 
 const firebaseConfig = {
 
   apiKey:
-  "AIzaSyC8-pN9Jg4BXOH9dHsWyH_wHjjr_iXekox",
+  "AIzaSyC8-pN9Jg4BX0H9Os2HsY_wHjjr_jXexok",
 
   authDomain:
   "carding-website-87a10.firebaseapp.com",
@@ -274,15 +264,15 @@ const firebaseConfig = {
   "carding-website-87a10.firebasestorage.app",
 
   messagingSenderId:
-  "105806699328",
+  "1058006993928",
 
   appId:
-  "1:105806699328:web:cb43d3d46e42d256655"
+  "1:1058006993928:web:cb43cdd346e42d256655bd",
 
+  measurementId:
+  "G-R7P99KNG19"
 };
 
-
-/* INITIALIZE FIREBASE */
 
 const app =
 initializeApp(firebaseConfig);
@@ -293,8 +283,6 @@ getAuth(app);
 const db =
 getFirestore(app);
 
-
-/* ELEMENTS */
 
 const loginBox =
 document.getElementById("loginBox");
@@ -315,8 +303,6 @@ const applicationsBox =
 document.getElementById("applications");
 
 
-/* ADMIN EMAIL */
-
 const ADMIN_EMAIL =
 "professionalcard79@gmail.com";
 
@@ -336,9 +322,7 @@ async function(){
   document.getElementById("password")
   .value;
 
-
   loginStatus.textContent = "";
-
 
   if(!email || !password){
 
@@ -348,12 +332,9 @@ async function(){
     return;
   }
 
-
   loginBtn.disabled = true;
-
   loginBtn.textContent =
   "LOGGING IN...";
-
 
   try{
 
@@ -363,10 +344,6 @@ async function(){
       password
     );
 
-
-    loginStatus.textContent = "";
-
-
   }catch(error){
 
     console.error(
@@ -374,26 +351,19 @@ async function(){
       error
     );
 
-
-    /* SHOW EXACT ERROR */
-
     loginStatus.textContent =
     "Firebase Error: " +
     error.code;
 
-
   }
 
-
   loginBtn.disabled = false;
-
-  loginBtn.textContent =
-  "LOGIN";
+  loginBtn.textContent = "LOGIN";
 
 });
 
 
-/* AUTH STATE */
+/* AUTH CHECK */
 
 onAuthStateChanged(
 auth,
@@ -413,8 +383,6 @@ async function(user){
   }
 
 
-  /* ADMIN EMAIL CHECK */
-
   if(
     user.email.toLowerCase() !==
     ADMIN_EMAIL.toLowerCase()
@@ -429,8 +397,6 @@ async function(user){
   }
 
 
-  /* SHOW ADMIN */
-
   loginBox.classList.add(
     "hidden"
   );
@@ -438,7 +404,6 @@ async function(user){
   adminPanel.classList.remove(
     "hidden"
   );
-
 
   loadApplications();
 
@@ -451,15 +416,7 @@ logoutBtn.addEventListener(
 "click",
 async function(){
 
-  try{
-
-    await signOut(auth);
-
-  }catch(error){
-
-    console.error(error);
-
-  }
+  await signOut(auth);
 
 });
 
@@ -470,7 +427,6 @@ async function loadApplications(){
 
   applicationsBox.innerHTML =
   '<p class="empty">Loading applications...</p>';
-
 
   try{
 
@@ -495,53 +451,16 @@ async function loadApplications(){
     applicationsBox.innerHTML = "";
 
 
-    const applications = [];
-
-
     snapshot.forEach(
     function(item){
 
-      applications.push({
-
-        id:item.id,
-
-        data:item.data()
-
-      });
-
-    });
-
-
-    /* SORT BY DATE */
-
-    applications.sort(
-    function(a,b){
-
-      const aTime =
-      a.data.createdAt?.seconds || 0;
-
-      const bTime =
-      b.data.createdAt?.seconds || 0;
-
-      return bTime - aTime;
-
-    });
-
-
-    /* DISPLAY */
-
-    applications.forEach(
-    function(item){
-
       const data =
-      item.data;
-
+      item.data();
 
       const application =
       document.createElement(
         "div"
       );
-
 
       application.className =
       "application";
@@ -555,7 +474,6 @@ async function loadApplications(){
       application.innerHTML = `
 
         <div class="row">
-
           <div class="label">
             Name
           </div>
@@ -565,12 +483,10 @@ async function loadApplications(){
               data.name || ""
             )}
           </div>
-
         </div>
 
 
         <div class="row">
-
           <div class="label">
             Email
           </div>
@@ -580,12 +496,10 @@ async function loadApplications(){
               data.email || ""
             )}
           </div>
-
         </div>
 
 
         <div class="row">
-
           <div class="label">
             Mobile
           </div>
@@ -595,12 +509,10 @@ async function loadApplications(){
               data.mobile || ""
             )}
           </div>
-
         </div>
 
 
         <div class="row">
-
           <div class="label">
             Card
           </div>
@@ -610,12 +522,10 @@ async function loadApplications(){
               data.card || ""
             )}
           </div>
-
         </div>
 
 
         <div class="row">
-
           <div class="label">
             Application ID
           </div>
@@ -625,22 +535,15 @@ async function loadApplications(){
               item.id
             )}
           </div>
-
         </div>
 
 
         <div class="status">
-
           Status:
-          ${escapeHtml(
-            status
-          )}
-
+          ${escapeHtml(status)}
         </div>
 
-
         <br>
-
 
         <button
           class="approve"
@@ -648,11 +551,8 @@ async function loadApplications(){
             '${item.id}',
             'Approved'
           )">
-
           APPROVE
-
         </button>
-
 
         <button
           class="reject"
@@ -660,9 +560,7 @@ async function loadApplications(){
             '${item.id}',
             'Rejected'
           )">
-
           REJECT
-
         </button>
 
       `;
@@ -681,7 +579,6 @@ async function loadApplications(){
       "Firestore Error:",
       error
     );
-
 
     applicationsBox.innerHTML = `
 
@@ -740,11 +637,7 @@ async function(
 
   }catch(error){
 
-    console.error(
-      "Update Error:",
-      error
-    );
-
+    console.error(error);
 
     alert(
       "Update failed: " +
@@ -756,36 +649,16 @@ async function(
 };
 
 
-/* HTML SECURITY */
+/* SECURITY */
 
 function escapeHtml(value){
 
   return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 
 }
 
