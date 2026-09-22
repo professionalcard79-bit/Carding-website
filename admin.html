@@ -71,6 +71,11 @@ button{
   cursor:pointer;
 }
 
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
 .login-btn{
   width:100%;
   background:#d6b45b;
@@ -132,6 +137,12 @@ button{
 .error{
   color:#ff6b6b;
   margin-top:10px;
+  word-break:break-word;
+}
+
+.success{
+  color:#7ee787;
+  margin-top:10px;
 }
 
 .hidden{
@@ -145,6 +156,7 @@ button{
   gap:10px;
   flex-wrap:wrap;
 }
+
 </style>
 </head>
 
@@ -156,9 +168,12 @@ button{
 </div>
 </header>
 
+
 <main class="container">
 
-<!-- LOGIN -->
+
+<!-- LOGIN BOX -->
+
 <div id="loginBox" class="box">
 
 <h1>Admin Login</h1>
@@ -194,6 +209,7 @@ Sign in with your authorized admin account.
 
 
 <!-- ADMIN PANEL -->
+
 <div id="adminPanel" class="hidden">
 
 <div class="topbar">
@@ -214,6 +230,7 @@ Sign in with your authorized admin account.
 </div>
 
 </div>
+
 
 </main>
 
@@ -240,29 +257,44 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
+/* FIREBASE CONFIG */
+
 const firebaseConfig = {
 
-  apiKey: "AIzaSyC8-pN9Jg4BXOH9dHsWyH_wHjjr_iXekox",
+  apiKey:
+  "AIzaSyC8-pN9Jg4BXOH9dHsWyH_wHjjr_iXekox",
 
-  authDomain: "carding-website-87a10.firebaseapp.com",
+  authDomain:
+  "carding-website-87a10.firebaseapp.com",
 
-  projectId: "carding-website-87a10",
+  projectId:
+  "carding-website-87a10",
 
-  storageBucket: "carding-website-87a10.firebasestorage.app",
+  storageBucket:
+  "carding-website-87a10.firebasestorage.app",
 
-  messagingSenderId: "105806699328",
+  messagingSenderId:
+  "105806699328",
 
-  appId: "1:105806699328:web:cb43d3d46e42d256655"
+  appId:
+  "1:105806699328:web:cb43d3d46e42d256655"
 
 };
 
 
-const app = initializeApp(firebaseConfig);
+/* INITIALIZE FIREBASE */
 
-const auth = getAuth(app);
+const app =
+initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const auth =
+getAuth(app);
 
+const db =
+getFirestore(app);
+
+
+/* ELEMENTS */
 
 const loginBox =
 document.getElementById("loginBox");
@@ -283,21 +315,30 @@ const applicationsBox =
 document.getElementById("applications");
 
 
+/* ADMIN EMAIL */
+
 const ADMIN_EMAIL =
 "professionalcard79@gmail.com";
 
 
 /* LOGIN */
 
-loginBtn.addEventListener("click", async () => {
+loginBtn.addEventListener(
+"click",
+async function(){
 
   const email =
-  document.getElementById("email").value.trim();
+  document.getElementById("email")
+  .value
+  .trim();
 
   const password =
-  document.getElementById("password").value;
+  document.getElementById("password")
+  .value;
+
 
   loginStatus.textContent = "";
+
 
   if(!email || !password){
 
@@ -307,8 +348,12 @@ loginBtn.addEventListener("click", async () => {
     return;
   }
 
+
   loginBtn.disabled = true;
-  loginBtn.textContent = "LOGGING IN...";
+
+  loginBtn.textContent =
+  "LOGGING IN...";
+
 
   try{
 
@@ -318,35 +363,62 @@ loginBtn.addEventListener("click", async () => {
       password
     );
 
+
+    loginStatus.textContent = "";
+
+
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Firebase Login Error:",
+      error
+    );
+
+
+    /* SHOW EXACT ERROR */
 
     loginStatus.textContent =
-    "Login failed. Check your email and password.";
+    "Firebase Error: " +
+    error.code;
+
 
   }
 
+
   loginBtn.disabled = false;
-  loginBtn.textContent = "LOGIN";
+
+  loginBtn.textContent =
+  "LOGIN";
 
 });
 
 
-/* AUTH CHECK */
+/* AUTH STATE */
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(
+auth,
+async function(user){
 
   if(!user){
 
-    loginBox.classList.remove("hidden");
-    adminPanel.classList.add("hidden");
+    loginBox.classList.remove(
+      "hidden"
+    );
+
+    adminPanel.classList.add(
+      "hidden"
+    );
 
     return;
   }
 
 
-  if(user.email !== ADMIN_EMAIL){
+  /* ADMIN EMAIL CHECK */
+
+  if(
+    user.email.toLowerCase() !==
+    ADMIN_EMAIL.toLowerCase()
+  ){
 
     await signOut(auth);
 
@@ -357,8 +429,16 @@ onAuthStateChanged(auth, async (user) => {
   }
 
 
-  loginBox.classList.add("hidden");
-  adminPanel.classList.remove("hidden");
+  /* SHOW ADMIN */
+
+  loginBox.classList.add(
+    "hidden"
+  );
+
+  adminPanel.classList.remove(
+    "hidden"
+  );
+
 
   loadApplications();
 
@@ -367,9 +447,19 @@ onAuthStateChanged(auth, async (user) => {
 
 /* LOGOUT */
 
-logoutBtn.addEventListener("click", async () => {
+logoutBtn.addEventListener(
+"click",
+async function(){
 
-  await signOut(auth);
+  try{
+
+    await signOut(auth);
+
+  }catch(error){
+
+    console.error(error);
+
+  }
 
 });
 
@@ -381,11 +471,15 @@ async function loadApplications(){
   applicationsBox.innerHTML =
   '<p class="empty">Loading applications...</p>';
 
+
   try{
 
     const snapshot =
     await getDocs(
-      collection(db,"applications")
+      collection(
+        db,
+        "applications"
+      )
     );
 
 
@@ -403,17 +497,25 @@ async function loadApplications(){
 
     const applications = [];
 
-    snapshot.forEach((item) => {
+
+    snapshot.forEach(
+    function(item){
 
       applications.push({
+
         id:item.id,
+
         data:item.data()
+
       });
 
     });
 
 
-    applications.sort((a,b) => {
+    /* SORT BY DATE */
+
+    applications.sort(
+    function(a,b){
 
       const aTime =
       a.data.createdAt?.seconds || 0;
@@ -426,93 +528,173 @@ async function loadApplications(){
     });
 
 
-    applications.forEach((item) => {
+    /* DISPLAY */
 
-      const data = item.data;
+    applications.forEach(
+    function(item){
+
+      const data =
+      item.data;
+
 
       const application =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
       application.className =
       "application";
 
 
       const status =
-      data.status || "Pending";
+      data.status ||
+      "Pending";
 
 
       application.innerHTML = `
 
         <div class="row">
-          <div class="label">Name</div>
-          <div class="value">
-            ${escapeHtml(data.name || "")}
+
+          <div class="label">
+            Name
           </div>
+
+          <div class="value">
+            ${escapeHtml(
+              data.name || ""
+            )}
+          </div>
+
         </div>
 
-        <div class="row">
-          <div class="label">Email</div>
-          <div class="value">
-            ${escapeHtml(data.email || "")}
-          </div>
-        </div>
 
         <div class="row">
-          <div class="label">Mobile</div>
-          <div class="value">
-            ${escapeHtml(data.mobile || "")}
+
+          <div class="label">
+            Email
           </div>
+
+          <div class="value">
+            ${escapeHtml(
+              data.email || ""
+            )}
+          </div>
+
         </div>
 
-        <div class="row">
-          <div class="label">Card</div>
-          <div class="value">
-            ${escapeHtml(data.card || "")}
-          </div>
-        </div>
 
         <div class="row">
-          <div class="label">Application ID</div>
-          <div class="value">
-            ${escapeHtml(item.id)}
+
+          <div class="label">
+            Mobile
           </div>
+
+          <div class="value">
+            ${escapeHtml(
+              data.mobile || ""
+            )}
+          </div>
+
         </div>
+
+
+        <div class="row">
+
+          <div class="label">
+            Card
+          </div>
+
+          <div class="value">
+            ${escapeHtml(
+              data.card || ""
+            )}
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div class="label">
+            Application ID
+          </div>
+
+          <div class="value">
+            ${escapeHtml(
+              item.id
+            )}
+          </div>
+
+        </div>
+
 
         <div class="status">
-          Status: ${escapeHtml(status)}
+
+          Status:
+          ${escapeHtml(
+            status
+          )}
+
         </div>
+
 
         <br>
 
+
         <button
           class="approve"
-          onclick="changeStatus('${item.id}','Approved')">
+          onclick="changeStatus(
+            '${item.id}',
+            'Approved'
+          )">
+
           APPROVE
+
         </button>
+
 
         <button
           class="reject"
-          onclick="changeStatus('${item.id}','Rejected')">
+          onclick="changeStatus(
+            '${item.id}',
+            'Rejected'
+          )">
+
           REJECT
+
         </button>
 
       `;
 
 
-      applicationsBox.appendChild(application);
+      applicationsBox.appendChild(
+        application
+      );
 
     });
 
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Firestore Error:",
+      error
+    );
+
 
     applicationsBox.innerHTML = `
+
       <p class="error">
-        Error loading applications.
-        Please check Firebase Authentication and Firestore Rules.
+
+        Firestore Error:
+        ${escapeHtml(
+          error.code ||
+          error.message
+        )}
+
       </p>
+
     `;
 
   }
@@ -522,7 +704,8 @@ async function loadApplications(){
 
 /* APPROVE / REJECT */
 
-window.changeStatus = async function(
+window.changeStatus =
+async function(
   applicationId,
   newStatus
 ){
@@ -530,14 +713,18 @@ window.changeStatus = async function(
   try{
 
     await updateDoc(
+
       doc(
         db,
         "applications",
         applicationId
       ),
+
       {
-        status:newStatus
+        status:
+        newStatus
       }
+
     );
 
 
@@ -553,10 +740,15 @@ window.changeStatus = async function(
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Update Error:",
+      error
+    );
+
 
     alert(
-      "Update failed. Please check Firebase rules."
+      "Update failed: " +
+      error.code
     );
 
   }
@@ -564,16 +756,36 @@ window.changeStatus = async function(
 };
 
 
-/* SECURITY */
+/* HTML SECURITY */
 
 function escapeHtml(value){
 
   return String(value)
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
