@@ -73,6 +73,7 @@ button{
 
 button:disabled{
   opacity:.6;
+  cursor:not-allowed;
 }
 
 .login-btn{
@@ -150,6 +151,110 @@ button:disabled{
   gap:10px;
   flex-wrap:wrap;
 }
+
+
+/* SUCCESS OVERLAY */
+
+.success-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.88);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.success-card{
+  width:100%;
+  max-width:390px;
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:24px;
+  padding:35px 25px;
+  text-align:center;
+  box-shadow:0 0 40px rgba(214,180,91,.18);
+  animation:pop .35s ease;
+}
+
+.check-circle{
+  width:90px;
+  height:90px;
+  margin:0 auto 20px;
+  border-radius:50%;
+  background:#19a463;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:checkPop .5s ease;
+  box-shadow:0 0 30px rgba(25,164,99,.35);
+}
+
+.check{
+  color:#fff;
+  font-size:55px;
+  font-weight:bold;
+  line-height:1;
+}
+
+.success-card h2{
+  margin:10px 0;
+  font-size:25px;
+}
+
+.success-card .success-sub{
+  color:#19c777;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.success-card .success-note{
+  color:#999;
+  font-size:14px;
+}
+
+.store-btn{
+  display:block;
+  width:100%;
+  margin-top:25px;
+  padding:14px;
+  border-radius:12px;
+  background:#d6b45b;
+  color:#000;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.close-btn{
+  width:100%;
+  background:#242424;
+  color:#fff;
+  margin-top:10px;
+}
+
+@keyframes pop{
+  from{
+    transform:scale(.8);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+@keyframes checkPop{
+  0%{
+    transform:scale(0);
+  }
+  70%{
+    transform:scale(1.15);
+  }
+  100%{
+    transform:scale(1);
+  }
+}
 </style>
 </head>
 
@@ -160,6 +265,7 @@ button:disabled{
 <div class="logo">CARD<span>ING</span> ADMIN</div>
 </div>
 </header>
+
 
 <main class="container">
 
@@ -225,6 +331,45 @@ Sign in with your authorized admin account.
 </main>
 
 
+<!-- SUCCESS POPUP -->
+
+<div id="successOverlay" class="success-overlay">
+
+  <div class="success-card">
+
+    <div class="check-circle">
+      <div class="check">✓</div>
+    </div>
+
+    <h2>Payment Successful</h2>
+
+    <div class="success-sub">
+      Application Approved
+    </div>
+
+    <p class="success-note">
+      The application has been successfully approved.
+    </p>
+
+    <a
+      href="card-store.html"
+      target="_blank"
+      class="store-btn">
+      GO TO CARD STORE
+    </a>
+
+    <button
+      type="button"
+      class="close-btn"
+      id="closeSuccess">
+      CLOSE
+    </button>
+
+  </div>
+
+</div>
+
+
 <script type="module">
 
 import {
@@ -247,12 +392,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* CORRECT FIREBASE CONFIG */
+/* FIREBASE CONFIG */
 
 const firebaseConfig = {
 
   apiKey:
-  "AIzaSyC8-pN9Jg4BX0H9Os2HsY_wHjjr_jXexok",
+  "AIzaSyC8-pN9Jg4BXOH9dHsWyH_wHjjr_iXekox",
 
   authDomain:
   "carding-website-87a10.firebaseapp.com",
@@ -264,13 +409,11 @@ const firebaseConfig = {
   "carding-website-87a10.firebasestorage.app",
 
   messagingSenderId:
-  "1058006993928",
+  "105806699328",
 
   appId:
-  "1:1058006993928:web:cb43cdd346e42d256655bd",
+  "1:105806699328:web:cb43d3d46e42d256655"
 
-  measurementId:
-  "G-R7P99KNG19"
 };
 
 
@@ -283,6 +426,8 @@ getAuth(app);
 const db =
 getFirestore(app);
 
+
+/* ELEMENTS */
 
 const loginBox =
 document.getElementById("loginBox");
@@ -302,6 +447,12 @@ document.getElementById("loginStatus");
 const applicationsBox =
 document.getElementById("applications");
 
+const successOverlay =
+document.getElementById("successOverlay");
+
+const closeSuccess =
+document.getElementById("closeSuccess");
+
 
 const ADMIN_EMAIL =
 "professionalcard79@gmail.com";
@@ -309,20 +460,16 @@ const ADMIN_EMAIL =
 
 /* LOGIN */
 
-loginBtn.addEventListener(
-"click",
-async function(){
+loginBtn.addEventListener("click", async () => {
 
   const email =
-  document.getElementById("email")
-  .value
-  .trim();
+  document.getElementById("email").value.trim();
 
   const password =
-  document.getElementById("password")
-  .value;
+  document.getElementById("password").value;
 
   loginStatus.textContent = "";
+
 
   if(!email || !password){
 
@@ -332,9 +479,10 @@ async function(){
     return;
   }
 
+
   loginBtn.disabled = true;
-  loginBtn.textContent =
-  "LOGGING IN...";
+  loginBtn.textContent = "LOGGING IN...";
+
 
   try{
 
@@ -357,6 +505,7 @@ async function(){
 
   }
 
+
   loginBtn.disabled = false;
   loginBtn.textContent = "LOGIN";
 
@@ -366,59 +515,51 @@ async function(){
 /* AUTH CHECK */
 
 onAuthStateChanged(
-auth,
-async function(user){
+  auth,
+  async (user) => {
 
-  if(!user){
+    if(!user){
 
-    loginBox.classList.remove(
-      "hidden"
-    );
+      loginBox.classList.remove("hidden");
+      adminPanel.classList.add("hidden");
 
-    adminPanel.classList.add(
-      "hidden"
-    );
+      return;
+    }
 
-    return;
+
+    if(
+      user.email.toLowerCase() !==
+      ADMIN_EMAIL.toLowerCase()
+    ){
+
+      await signOut(auth);
+
+      loginStatus.textContent =
+      "This account is not authorized.";
+
+      return;
+    }
+
+
+    loginBox.classList.add("hidden");
+    adminPanel.classList.remove("hidden");
+
+    loadApplications();
+
   }
-
-
-  if(
-    user.email.toLowerCase() !==
-    ADMIN_EMAIL.toLowerCase()
-  ){
-
-    await signOut(auth);
-
-    loginStatus.textContent =
-    "This account is not authorized.";
-
-    return;
-  }
-
-
-  loginBox.classList.add(
-    "hidden"
-  );
-
-  adminPanel.classList.remove(
-    "hidden"
-  );
-
-  loadApplications();
-
-});
+);
 
 
 /* LOGOUT */
 
 logoutBtn.addEventListener(
-"click",
-async function(){
+  "click",
+  async () => {
 
-  await signOut(auth);
+    await signOut(auth);
 
-});
+  }
+);
 
 
 /* LOAD APPLICATIONS */
@@ -428,14 +569,12 @@ async function loadApplications(){
   applicationsBox.innerHTML =
   '<p class="empty">Loading applications...</p>';
 
+
   try{
 
     const snapshot =
     await getDocs(
-      collection(
-        db,
-        "applications"
-      )
+      collection(db,"applications")
     );
 
 
@@ -451,115 +590,99 @@ async function loadApplications(){
     applicationsBox.innerHTML = "";
 
 
-    snapshot.forEach(
-    function(item){
+    const applications = [];
 
-      const data =
-      item.data();
+
+    snapshot.forEach((item) => {
+
+      applications.push({
+        id:item.id,
+        data:item.data()
+      });
+
+    });
+
+
+    applications.sort((a,b) => {
+
+      const aTime =
+      a.data.createdAt?.seconds || 0;
+
+      const bTime =
+      b.data.createdAt?.seconds || 0;
+
+      return bTime - aTime;
+
+    });
+
+
+    applications.forEach((item) => {
+
+      const data = item.data;
 
       const application =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
       application.className =
       "application";
 
 
       const status =
-      data.status ||
-      "Pending";
+      data.status || "Pending";
 
 
       application.innerHTML = `
 
         <div class="row">
-          <div class="label">
-            Name
-          </div>
-
+          <div class="label">Name</div>
           <div class="value">
-            ${escapeHtml(
-              data.name || ""
-            )}
+            ${escapeHtml(data.name || "")}
           </div>
         </div>
-
 
         <div class="row">
-          <div class="label">
-            Email
-          </div>
-
+          <div class="label">Email</div>
           <div class="value">
-            ${escapeHtml(
-              data.email || ""
-            )}
+            ${escapeHtml(data.email || "")}
           </div>
         </div>
-
 
         <div class="row">
-          <div class="label">
-            Mobile
-          </div>
-
+          <div class="label">Mobile</div>
           <div class="value">
-            ${escapeHtml(
-              data.mobile || ""
-            )}
+            ${escapeHtml(data.mobile || "")}
           </div>
         </div>
-
 
         <div class="row">
-          <div class="label">
-            Card
-          </div>
-
+          <div class="label">Card</div>
           <div class="value">
-            ${escapeHtml(
-              data.card || ""
-            )}
+            ${escapeHtml(data.card || "")}
           </div>
         </div>
-
 
         <div class="row">
-          <div class="label">
-            Application ID
-          </div>
-
+          <div class="label">Application ID</div>
           <div class="value">
-            ${escapeHtml(
-              item.id
-            )}
+            ${escapeHtml(item.id)}
           </div>
         </div>
-
 
         <div class="status">
-          Status:
-          ${escapeHtml(status)}
+          Status: ${escapeHtml(status)}
         </div>
 
         <br>
 
         <button
           class="approve"
-          onclick="changeStatus(
-            '${item.id}',
-            'Approved'
-          )">
+          onclick="changeStatus('${item.id}','Approved')">
           APPROVE
         </button>
 
         <button
           class="reject"
-          onclick="changeStatus(
-            '${item.id}',
-            'Rejected'
-          )">
+          onclick="changeStatus('${item.id}','Rejected')">
           REJECT
         </button>
 
@@ -575,21 +698,16 @@ async function loadApplications(){
 
   }catch(error){
 
-    console.error(
-      "Firestore Error:",
-      error
-    );
+    console.error(error);
 
     applicationsBox.innerHTML = `
 
       <p class="error">
-
         Firestore Error:
         ${escapeHtml(
           error.code ||
           error.message
         )}
-
       </p>
 
     `;
@@ -601,8 +719,7 @@ async function loadApplications(){
 
 /* APPROVE / REJECT */
 
-window.changeStatus =
-async function(
+window.changeStatus = async function(
   applicationId,
   newStatus
 ){
@@ -610,34 +727,42 @@ async function(
   try{
 
     await updateDoc(
-
       doc(
         db,
         "applications",
         applicationId
       ),
-
       {
-        status:
-        newStatus
+        status:newStatus
       }
-
-    );
-
-
-    alert(
-      "Application " +
-      newStatus +
-      " successfully."
     );
 
 
     loadApplications();
 
 
+    /* SHOW SUCCESS ONLY AFTER APPROVAL */
+
+    if(newStatus === "Approved"){
+
+      successOverlay.style.display =
+      "flex";
+
+    }else{
+
+      alert(
+        "Application Rejected Successfully."
+      );
+
+    }
+
+
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Update Error:",
+      error
+    );
 
     alert(
       "Update failed: " +
@@ -649,16 +774,29 @@ async function(
 };
 
 
-/* SECURITY */
+/* CLOSE SUCCESS POPUP */
+
+closeSuccess.addEventListener(
+  "click",
+  () => {
+
+    successOverlay.style.display =
+    "none";
+
+  }
+);
+
+
+/* ESCAPE HTML */
 
 function escapeHtml(value){
 
   return String(value)
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
