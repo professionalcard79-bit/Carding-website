@@ -1,1 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>CARDING — Card Store</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f1f3f6;
+  color:#111;
+}
+
+/* HEADER */
+
+.header{
+  background:#070707;
+  color:white;
+  padding:14px 5%;
+  display:flex;
+  align-items:center;
+  gap:25px;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:5px;
+  white-space:nowrap;
+}
+
+.logo span{
+  color:#d6b45b;
+}
+
+.search{
+  flex:1;
+}
+
+.search input{
+  width:100%;
+  padding:13px 18px;
+  border:0;
+  border-radius:5px;
+  outline:none;
+  font-size:15px;
+}
+
+.store{
+  color:#d6b45b;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+/* CATEGORY */
+
+.categories{
+  background:white;
+  padding:15px 5%;
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  border-bottom:1px solid #ddd;
+}
+
+.categories button{
+  border:1px solid #ddd;
+  background:white;
+  padding:9px 18px;
+  border-radius:20px;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+.categories button.active,
+.categories button:hover{
+  background:#070707;
+  color:#d6b45b;
+}
+
+/* MAIN */
+
+.container{
+  width:94%;
+  max-width:1400px;
+  margin:25px auto;
+}
+
+.top{
+  background:white;
+  padding:20px;
+  margin-bottom:18px;
+  border-radius:6px;
+}
+
+.top h1{
+  margin:0 0 6px;
+  font-size:25px;
+}
+
+.top p{
+  margin:0;
+  color:#777;
+}
+
+/* PRODUCTS */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.product{
+  background:white;
+  border-radius:5px;
+  overflow:hidden;
+  border:1px solid #ddd;
+  transition:.2s;
+}
+
+.product:hover{
+  transform:translateY(-3px);
+  box-shadow:0 5px 18px rgba(0,0,0,.15);
+}
+
+.image{
+  height:210px;
+  padding:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#fafafa;
+}
+
+.image img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.info{
+  padding:15px;
+}
+
+.name{
+  font-size:17px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.rating{
+  display:inline-block;
+  background:#168a45;
+  color:white;
+  padding:4px 7px;
+  border-radius:4px;
+  font-size:12px;
+}
+
+.details{
+  color:#666;
+  font-size:13px;
+  margin-top:10px;
+  line-height:1.5;
+}
+
+.balance{
+  margin-top:10px;
+  font-size:14px;
+}
+
+.price{
+  margin-top:9px;
+  font-size:21px;
+  font-weight:bold;
+}
+
+.old{
+  color:#999;
+  font-size:13px;
+  text-decoration:line-through;
+  margin-left:5px;
+}
+
+.discount{
+  color:#168a45;
+  font-size:13px;
+  margin-left:5px;
+}
+
+.buy{
+  width:100%;
+  margin-top:14px;
+  padding:12px;
+  border:0;
+  border-radius:5px;
+  background:#d6b45b;
+  color:#000;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.buy:hover{
+  background:#c5a348;
+}
+
+/* FOOTER */
+
+footer{
+  margin-top:45px;
+  background:#070707;
+  color:#aaa;
+  text-align:center;
+  padding:30px;
+}
+
+footer strong{
+  color:#d6b45b;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+  .products{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:700px){
+
+  .header{
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  .search{
+    order:3;
+    width:100%;
+    flex-basis:100%;
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+  }
+
+  .image{
+    height:150px;
+  }
+
+  .info{
+    padding:11px;
+  }
+
+  .name{
+    font-size:14px;
+  }
+
+  .price{
+    font-size:18px;
+  }
+
+  .details,
+  .balance{
+    font-size:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div class="logo">
+    CARD<span>ING</span>
+  </div>
+
+  <div class="search">
+    <input
+      id="search"
+      type="search"
+      placeholder="Search cards and vouchers..."
+      oninput="searchProducts()"
+    >
+  </div>
+
+  <div class="store">
+    CARD STORE
+  </div>
+
+</header>
+
+
+<!-- CATEGORIES -->
+
+<div class="categories">
+
+  <button
+    class="active"
+    onclick="filterProducts('all',this)">
+    All
+  </button>
+
+  <button
+    onclick="filterProducts('gift',this)">
+    Gift Cards
+  </button>
+
+  <button
+    onclick="filterProducts('voucher',this)">
+    Vouchers
+  </button>
+
+  <button
+    onclick="filterProducts('card',this)">
+    Cards
+  </button>
+
+  <button
+    onclick="filterProducts('virtual',this)">
+    Virtual Cards
+  </button>
+
+</div>
+
+
+<main class="container">
+
+  <div class="top">
+    <h1>Card Store</h1>
+    <p>Choose your product</p>
+  </div>
+
+
+  <div class="products" id="products">
+
+
+    <!-- AMAZON GIFT CARD -->
+
+    <div
+      class="product"
+      data-category="gift"
+      data-name="Amazon Gift Card">
+
+      <div class="image">
+
+        <img
+          src="blog-banner_2020-Amazon-LinkeIn_compr.jpg"
+          alt="Amazon Gift Card"
+          onerror="this.src='cards.png'"
+        >
+
+      </div>
+
+      <div class="info">
+
+        <div class="name">
+          Amazon Gift Card
+        </div>
+
+        <span class="rating">
+          ★ 4.5
+        </span>
+
+        <div class="details">
+          Digital Amazon gift card.
+        </div>
+
+        <div class="balance">
+          Card Balance:
+          <strong>₹500</strong>
+        </div>
+
+        <div class="price">
+          ₹500
+          <span class="old">₹550</span>
+          <span class="discount">9% off</span>
+        </div>
+
+        <button
+          class="buy"
+          onclick="buyProduct('Amazon Gift Card')">
+          BUY NOW
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- GOOGLE PLAY -->
+
+    <div
+      class="product"
+      data-category="voucher"
+      data-name="Google Play Voucher">
+
+      <div class="image">
+
+        <img
+          src="gift_voucher.png"
+          alt="Google Play Voucher"
+          onerror="this.src='cards.png'"
+        >
+
+      </div>
+
+      <div class="info">
+
+        <div class="name">
+          Google Play Voucher
+        </div>
+
+        <span class="rating">
+          ★ 4.5
+        </span>
+
+        <div class="details">
+          Digital Google Play voucher.
+        </div>
+
+        <div class="balance">
+          Card Balance:
+          <strong>₹500</strong>
+        </div>
+
+        <div class="price">
+          ₹500
+          <span class="old">₹550</span>
+          <span class="discount">9% off</span>
+        </div>
+
+        <button
+          class="buy"
+          onclick="buyProduct('Google Play Voucher')">
+          BUY NOW
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- MASTERCARD -->
+
+    <div
+      class="product"
+      data-category="card"
+      data-name="Mastercard">
+
+      <div class="image">
+
+        <img
+          src="master-card-brac-bank-jpg.png"
+          alt="Mastercard"
+          onerror="this.src='cards.png'"
+        >
+
+      </div>
+
+      <div class="info">
+
+        <div class="name">
+          Mastercard
+        </div>
+
+        <span class="rating">
+          ★ 4.4
+        </span>
+
+        <div class="details">
+          Authorized Mastercard service.
+        </div>
+
+        <div class="balance">
+          Card Balance:
+          <strong>₹1,000</strong>
+        </div>
+
+        <div class="price">
+          ₹1,000
+        </div>
+
+        <button
+          class="buy"
+          onclick="buyProduct('Mastercard')">
+          BUY NOW
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- VIRTUAL CARD -->
+
+    <div
+      class="product"
+      data-category="virtual"
+      data-name="Virtual Card">
+
+      <div class="image">
+
+        <img
+          src="features_unlimited-virtual-cards__03~2.jpg"
+          alt="Virtual Card"
+          onerror="this.src='cards.png'"
+        >
+
+      </div>
+
+      <div class="info">
+
+        <div class="name">
+          Virtual Card
+        </div>
+
+        <span class="rating">
+          ★ 4.3
+        </span>
+
+        <div class="details">
+          Authorized virtual card service.
+        </div>
+
+        <div class="balance">
+          Card Balance:
+          <strong>₹1,000</strong>
+        </div>
+
+        <div class="price">
+          ₹1,000
+        </div>
+
+        <button
+          class="buy"
+          onclick="buyProduct('Virtual Card')">
+          BUY NOW
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- VISA CARD -->
+
+    <div
+      class="product"
+      data-category="card"
+      data-name="Visa Card">
+
+      <div class="image">
+
+        <img
+          src="card-classic.png"
+          alt="Visa Card"
+          onerror="this.src='cards.png'"
+        >
+
+      </div>
+
+      <div class="info">
+
+        <div class="name">
+          Visa Card
+        </div>
+
+        <span class="rating">
+          ★ 4.4
+        </span>
+
+        <div class="details">
+          Authorized Visa card service.
+        </div>
+
+        <div class="balance">
+          Card Balance:
+          <strong>₹1,000</strong>
+        </div>
+
+        <div class="price">
+          ₹1,000
+        </div>
+
+        <button
+          class="buy"
+          onclick="buyProduct('Visa Card')">
+          BUY NOW
+        </button>
+
+      </div>
+    </div>
+
+
+  </div>
+
+</main>
+
+
+<footer>
+
+  <strong>CARDING</strong>
+
+  <br><br>
+
+  Secure Digital Card Store
+
+  <br><br>
+
+  © 2026 CARDING. All rights reserved.
+
+</footer>
+
+
+<script>
+
+/* SEARCH */
+
+function searchProducts(){
+
+  const value =
+    document
+    .getElementById("search")
+    .value
+    .toLowerCase();
+
+  document
+    .querySelectorAll(".product")
+    .forEach(product => {
+
+      const name =
+        product
+        .dataset
+        .name
+        .toLowerCase();
+
+      product.style.display =
+        name.includes(value)
+        ? ""
+        : "none";
+
+    });
+
+}
+
+
+/* FILTER */
+
+function filterProducts(
+  category,
+  button
+){
+
+  document
+    .querySelectorAll(".categories button")
+    .forEach(btn => {
+      btn.classList.remove("active");
+    });
+
+  button.classList.add("active");
+
+  document
+    .querySelectorAll(".product")
+    .forEach(product => {
+
+      if(
+        category === "all" ||
+        product.dataset.category === category
+      ){
+        product.style.display = "";
+      }else{
+        product.style.display = "none";
+      }
+
+    });
+
+}
+
+
+/* BUY */
+
+function buyProduct(name){
+
+  alert(
+    name +
+    " selected. The authorized purchase/payment flow will be connected here."
+  );
+
+}
+
+</script>
+
+</body>
+</html>
