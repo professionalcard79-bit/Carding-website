@@ -1,1 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>CARDING — Payment</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f1f3f6;
+  color:#111;
+}
+
+.header{
+  background:#070707;
+  color:white;
+  padding:16px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:5px;
+}
+
+.logo span{
+  color:#d6b45b;
+}
+
+.store{
+  color:#d6b45b;
+  font-weight:bold;
+}
+
+.container{
+  width:92%;
+  max-width:600px;
+  margin:30px auto;
+}
+
+.payment-box{
+  background:white;
+  border-radius:12px;
+  padding:25px;
+  box-shadow:0 4px 18px rgba(0,0,0,.12);
+}
+
+.title{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.title h1{
+  margin:0 0 8px;
+  font-size:25px;
+}
+
+.title p{
+  margin:0;
+  color:#777;
+}
+
+.product{
+  background:#f7f7f7;
+  border-radius:8px;
+  padding:15px;
+  margin-bottom:20px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  margin:9px 0;
+}
+
+.label{
+  color:#777;
+}
+
+.value{
+  font-weight:bold;
+}
+
+.amount{
+  text-align:center;
+  margin:20px 0;
+}
+
+.amount small{
+  color:#777;
+}
+
+.amount h2{
+  margin:5px 0;
+  font-size:32px;
+}
+
+.qr-title{
+  text-align:center;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.qr{
+  text-align:center;
+  background:#fff;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
+
+.qr img{
+  width:280px;
+  max-width:100%;
+  border-radius:10px;
+}
+
+.note{
+  text-align:center;
+  color:#777;
+  font-size:13px;
+  margin:12px 0 20px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  outline:none;
+  font-size:15px;
+}
+
+input:focus{
+  border-color:#d6b45b;
+}
+
+.pay{
+  width:100%;
+  margin-top:15px;
+  padding:14px;
+  border:0;
+  border-radius:6px;
+  background:#d6b45b;
+  color:#000;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.pay:hover{
+  background:#c5a348;
+}
+
+.status{
+  text-align:center;
+  margin-top:15px;
+  font-weight:bold;
+}
+
+.back{
+  display:block;
+  text-align:center;
+  margin-top:18px;
+  color:#111;
+  text-decoration:none;
+}
+
+footer{
+  margin-top:40px;
+  background:#070707;
+  color:#aaa;
+  text-align:center;
+  padding:25px;
+}
+
+footer strong{
+  color:#d6b45b;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="logo">
+    CARD<span>ING</span>
+  </div>
+
+  <div class="store">
+    PAYMENT
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <div class="payment-box">
+
+    <div class="title">
+      <h1>Complete Payment</h1>
+      <p>Review your order and make payment</p>
+    </div>
+
+
+    <div class="product">
+
+      <div class="row">
+        <span class="label">Product</span>
+        <span class="value" id="productName">
+          Product
+        </span>
+      </div>
+
+      <div class="row">
+        <span class="label">Price</span>
+        <span class="value" id="productPrice">
+          ₹0
+        </span>
+      </div>
+
+    </div>
+
+
+    <div class="amount">
+
+      <small>Amount to Pay</small>
+
+      <h2 id="payAmount">
+        ₹0
+      </h2>
+
+    </div>
+
+
+    <div class="qr-title">
+      Scan QR to Pay
+    </div>
+
+    <div class="qr">
+
+      <img
+        src="Screenshot_20260921-182613~2.jpg"
+        alt="PhonePe Payment QR"
+      >
+
+    </div>
+
+    <div class="note">
+      Scan the QR code using your UPI app and pay the exact amount shown above.
+    </div>
+
+
+    <label for="utr">
+      UTR / Transaction ID
+    </label>
+
+    <input
+      type="text"
+      id="utr"
+      placeholder="Enter transaction ID"
+    >
+
+
+    <button
+      class="pay"
+      onclick="submitPayment()"
+      id="payButton"
+    >
+      Pay ₹0
+    </button>
+
+
+    <div
+      class="status"
+      id="status">
+    </div>
+
+
+    <a
+      class="back"
+      href="card-store.html">
+      ← Back to Card Store
+    </a>
+
+  </div>
+
+</main>
+
+
+<footer>
+
+  <strong>CARDING</strong>
+
+  <br><br>
+
+  Secure Digital Card Store
+
+  <br><br>
+
+  © 2026 CARDING. All rights reserved.
+
+</footer>
+
+
+<script>
+
+const products = {
+
+  "Amazon Gift Card": 499,
+
+  "Google Play Voucher": 699,
+
+  "Mastercard": 999,
+
+  "Virtual Card": 799,
+
+  "Visa Classic Card": 999,
+
+  "Visa Platinum Card": 1299,
+
+  "Visa Signature Card": 1499,
+
+  "Credit Card": 1199
+
+};
+
+
+const params =
+  new URLSearchParams(window.location.search);
+
+const product =
+  params.get("product") || "Product";
+
+const price =
+  products[product] || 0;
+
+
+document.getElementById("productName")
+.textContent = product;
+
+
+document.getElementById("productPrice")
+.textContent = "₹" + price;
+
+
+document.getElementById("payAmount")
+.textContent = "₹" + price;
+
+
+document.getElementById("payButton")
+.textContent = "Pay ₹" + price;
+
+
+function submitPayment(){
+
+  const utr =
+    document.getElementById("utr")
+    .value
+    .trim();
+
+  const status =
+    document.getElementById("status");
+
+  if(!utr){
+
+    status.style.color = "#d00";
+
+    status.textContent =
+      "Please enter your transaction ID.";
+
+    return;
+  }
+
+  status.style.color = "#168a45";
+
+  status.textContent =
+    "Payment details submitted. Verification required.";
+}
+
+</script>
+
+</body>
+</html>
