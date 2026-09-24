@@ -2,38 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>CARDING — Application Status</title>
 
 <style>
 *{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f1f3f6;
-  color:#111;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#070707;
+  color:#f6f3ed;
+  font-family:Arial, sans-serif;
 }
 
 .box{
-  width:92%;
-  max-width:500px;
-  margin:80px auto;
-  background:white;
-  padding:30px 22px;
-  border-radius:15px;
+  width:min(520px,100%);
+  padding:45px 28px;
   text-align:center;
-  box-shadow:0 5px 20px rgba(0,0,0,.12);
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:28px;
+  box-shadow:0 30px 90px #000;
 }
 
 .logo{
-  font-size:28px;
+  font-size:25px;
   font-weight:800;
   letter-spacing:5px;
-  margin-bottom:25px;
+  margin-bottom:35px;
 }
 
 .logo span{
@@ -41,45 +45,55 @@ body{
 }
 
 .loader{
-  width:45px;
-  height:45px;
-  margin:20px auto;
-  border:4px solid #ddd;
-  border-top:4px solid #d6b45b;
+  width:52px;
+  height:52px;
+  margin:0 auto 25px;
+  border:4px solid #292929;
+  border-top-color:#d6b45b;
   border-radius:50%;
   animation:spin 1s linear infinite;
 }
 
 @keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
+  to{transform:rotate(360deg)}
 }
 
 h1{
-  font-size:23px;
+  font-size:28px;
+  margin-bottom:14px;
 }
 
 p{
-  color:#777;
-  line-height:1.6;
+  color:#999;
+  line-height:1.7;
+  margin-bottom:10px;
+}
+
+.status{
+  margin-top:20px;
+  color:#d6b45b;
+  font-size:13px;
 }
 
 .success{
   display:none;
 }
 
-.button{
-  display:inline-block;
-  margin-top:20px;
-  padding:14px 22px;
-  background:#d6b45b;
-  color:#000;
-  text-decoration:none;
-  border-radius:7px;
-  font-weight:bold;
+.success h1{
+  color:#d6b45b;
 }
 
+.button{
+  display:inline-flex;
+  margin-top:25px;
+  padding:14px 24px;
+  border-radius:999px;
+  border:1px solid #d6b45b;
+  background:linear-gradient(135deg,#e4c56e,#a77a1e);
+  color:#080808;
+  font-weight:800;
+  text-decoration:none;
+}
 </style>
 </head>
 
@@ -91,6 +105,7 @@ p{
     CARD<span>ING</span>
   </div>
 
+  <!-- WAITING -->
   <div id="waiting">
 
     <div class="loader"></div>
@@ -105,9 +120,14 @@ p{
       Please wait while your application is being reviewed.
     </p>
 
+    <div id="status" class="status">
+      Checking application status...
+    </div>
+
   </div>
 
 
+  <!-- SUCCESS -->
   <div id="success" class="success">
 
     <h1>Application Approved ✅</h1>
@@ -116,9 +136,11 @@ p{
       Your application has been approved.
     </p>
 
-    <a
-      class="button"
-      href="card-store.html">
+    <p>
+      You can now continue to the card store.
+    </p>
+
+    <a class="button" href="card-store.html">
       GO TO CARD STORE
     </a>
 
@@ -126,5 +148,214 @@ p{
 
 </div>
 
+
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  getFirestore,
+  doc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+import {
+  getAuth,
+  signInAnonymously
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC8-pN9Jg4BX0H9Os2HsY_wHjjr_jXexok",
+  authDomain: "carding-website-87a10.firebaseapp.com",
+  projectId: "carding-website-87a10",
+  storageBucket: "carding-website-87a10.firebasestorage.app",
+  messagingSenderId: "1058006993928",
+  appId: "1:1058006993928:web:cb43cdd346e42d256655bd",
+  measurementId: "G-R7P99KNG19"
+};
+
+
+/* FIREBASE START */
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+
+/* ELEMENTS */
+
+const waiting =
+  document.getElementById("waiting");
+
+const success =
+  document.getElementById("success");
+
+const status =
+  document.getElementById("status");
+
+
+/* GET APPLICATION ID FROM URL */
+
+const params =
+  new URLSearchParams(window.location.search);
+
+const applicationId =
+  params.get("id");
+
+
+if (!applicationId) {
+
+  status.textContent =
+    "Application ID is missing.";
+
+} else {
+
+  startStatusCheck();
+
+}
+
+
+/* CHECK APPLICATION */
+
+async function startStatusCheck(){
+
+  try {
+
+    /*
+     * The same anonymous Firebase account created
+     * on index.html should normally be restored.
+     * If not, create one.
+     */
+
+    if (!auth.currentUser) {
+      await signInAnonymously(auth);
+    }
+
+
+    const uid =
+      auth.currentUser.uid;
+
+
+    console.log(
+      "Waiting page UID:",
+      uid
+    );
+
+
+    const applicationRef =
+      doc(
+        db,
+        "applications",
+        applicationId
+      );
+
+
+    /*
+     * LISTEN FOR REAL-TIME STATUS CHANGES
+     */
+
+    onSnapshot(
+
+      applicationRef,
+
+      function(snapshot){
+
+        if (!snapshot.exists()) {
+
+          status.textContent =
+            "Application not found.";
+
+          return;
+        }
+
+
+        const data =
+          snapshot.data();
+
+
+        /*
+         * Extra client-side ownership check.
+         */
+
+        if (data.uid !== uid) {
+
+          status.textContent =
+            "This application cannot be opened on this device.";
+
+          return;
+
+        }
+
+
+        if (
+          data.status === "Approved" ||
+          data.status === "approved"
+        ) {
+
+          waiting.style.display =
+            "none";
+
+          success.style.display =
+            "block";
+
+          return;
+
+        }
+
+
+        if (
+          data.status === "Rejected" ||
+          data.status === "rejected"
+        ) {
+
+          status.textContent =
+            "Your application was not approved.";
+
+          return;
+
+        }
+
+
+        status.textContent =
+          "Application is still under review...";
+
+      },
+
+      function(error){
+
+        console.error(
+          "Status listener error:",
+          error
+        );
+
+        status.textContent =
+          "Unable to check application status. Please refresh the page.";
+
+      }
+
+    );
+
+  } catch(error){
+
+    console.error(
+      "Waiting Page Error:",
+      error
+    );
+
+    status.textContent =
+      "Unable to connect. Please refresh the page.";
+
+  }
+
+}
+
+</script>
+
 </body>
 </html>
+
