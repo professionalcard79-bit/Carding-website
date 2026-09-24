@@ -353,7 +353,7 @@ footer strong{color:#d6b45b}
         </div>
 
         <button class="buy"
-          onclick="buyProduct('Amazon Gift Card')">
+          onclick="buyProduct('Amazon Gift Card',499)">
           BUY NOW
         </button>
 
@@ -396,7 +396,7 @@ footer strong{color:#d6b45b}
         </div>
 
         <button class="buy"
-          onclick="buyProduct('Google Play Voucher')">
+          onclick="buyProduct('Google Play Voucher',699)">
           BUY NOW
         </button>
 
@@ -437,7 +437,7 @@ footer strong{color:#d6b45b}
         </div>
 
         <button class="buy"
-          onclick="buyProduct('Mastercard')">
+          onclick="buyProduct('Mastercard',999)">
           BUY NOW
         </button>
 
@@ -478,7 +478,7 @@ footer strong{color:#d6b45b}
         </div>
 
         <button class="buy"
-          onclick="buyProduct('Virtual Card')">
+          onclick="buyProduct('Virtual Card',799)">
           BUY NOW
         </button>
 
@@ -519,7 +519,7 @@ footer strong{color:#d6b45b}
         </div>
 
         <button class="buy"
-          onclick="buyProduct('Visa Classic Card')">
+          onclick="buyProduct('Visa Classic Card',999)">
           BUY NOW
         </button>
 
@@ -560,7 +560,7 @@ footer strong{color:#d6b45b}
         </div>
 
         <button class="buy"
-          onclick="buyProduct('Visa Platinum Card')">
+          onclick="buyProduct('Visa Platinum Card',1299)">
           BUY NOW
         </button>
 
@@ -601,7 +601,7 @@ footer strong{color:#d6b45b}
         </div>
 
         <button class="buy"
-          onclick="buyProduct('Visa Signature Card')">
+          onclick="buyProduct('Visa Signature Card',1499)">
           BUY NOW
         </button>
 
@@ -642,13 +642,12 @@ footer strong{color:#d6b45b}
         </div>
 
         <button class="buy"
-          onclick="buyProduct('Credit Card')">
+          onclick="buyProduct('Credit Card',1199)">
           BUY NOW
         </button>
 
       </div>
     </div>
-
 
   </div>
 
@@ -723,12 +722,15 @@ function filterProducts(category,button){
 }
 
 
-function buyProduct(name){
+/* BUY NOW → BUY.HTML */
 
-  alert(
-    name +
-    " selected. Purchase flow will be connected here."
-  );
+function buyProduct(name,price){
+
+  window.location.href =
+    "buy.html?product=" +
+    encodeURIComponent(name) +
+    "&price=" +
+    encodeURIComponent(price);
 
 }
 
