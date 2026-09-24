@@ -259,7 +259,7 @@ footer strong{
 
       <img
         src="Screenshot_20260921-182613~2.jpg"
-        alt="PhonePe Payment QR"
+        alt="UPI Payment QR"
       >
 
     </div>
@@ -269,7 +269,15 @@ footer strong{
     </div>
 
 
-    <label for="utr">
+    <button
+      class="pay"
+      onclick="openUPIPayment()"
+      id="payButton">
+      Pay ₹0
+    </button>
+
+
+    <label for="utr" style="margin-top:20px;">
       UTR / Transaction ID
     </label>
 
@@ -283,9 +291,8 @@ footer strong{
     <button
       class="pay"
       onclick="submitPayment()"
-      id="payButton"
-    >
-      Pay ₹0
+      style="background:#222;color:#d6b45b;">
+      Submit Payment Details
     </button>
 
 
@@ -345,10 +352,14 @@ const products = {
 
 
 const params =
-  new URLSearchParams(window.location.search);
+  new URLSearchParams(
+    window.location.search
+  );
+
 
 const product =
   params.get("product") || "Product";
+
 
 const price =
   products[product] || 0;
@@ -370,15 +381,64 @@ document.getElementById("payButton")
 .textContent = "Pay ₹" + price;
 
 
+/* UPI PAYMENT */
+
+function openUPIPayment(){
+
+  if(price <= 0){
+
+    alert("Invalid payment amount.");
+
+    return;
+  }
+
+
+  /*
+    IMPORTANT:
+    Replace YOUR_UPI_ID@bank
+    with your own verified UPI ID.
+  */
+
+  const upiId =
+  "9234050463-2@axl";
+
+
+  const merchantName =
+    "CARDING";
+
+
+  const upiUrl =
+    "upi://pay" +
+    "?pa=" +
+    encodeURIComponent(upiId) +
+    "&pn=" +
+    encodeURIComponent(merchantName) +
+    "&am=" +
+    encodeURIComponent(price) +
+    "&cu=INR";
+
+
+  window.location.href =
+    upiUrl;
+
+}
+
+
+/* SUBMIT UTR */
+
 function submitPayment(){
 
   const utr =
-    document.getElementById("utr")
+    document
+    .getElementById("utr")
     .value
     .trim();
 
+
   const status =
-    document.getElementById("status");
+    document
+    .getElementById("status");
+
 
   if(!utr){
 
@@ -390,10 +450,14 @@ function submitPayment(){
     return;
   }
 
-  status.style.color = "#168a45";
+
+  status.style.color =
+    "#168a45";
+
 
   status.textContent =
     "Payment details submitted. Verification required.";
+
 }
 
 </script>
