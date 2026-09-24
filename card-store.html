@@ -7,9 +7,7 @@
 <title>CARDING — Card Store</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -17,8 +15,6 @@ body{
   background:#f1f3f6;
   color:#111;
 }
-
-/* HEADER */
 
 .header{
   background:#070707;
@@ -39,13 +35,9 @@ body{
   white-space:nowrap;
 }
 
-.logo span{
-  color:#d6b45b;
-}
+.logo span{color:#d6b45b}
 
-.search{
-  flex:1;
-}
+.search{flex:1}
 
 .search input{
   width:100%;
@@ -61,8 +53,6 @@ body{
   font-weight:bold;
   white-space:nowrap;
 }
-
-/* CATEGORY */
 
 .categories{
   background:white;
@@ -88,8 +78,6 @@ body{
   color:#d6b45b;
 }
 
-/* MAIN */
-
 .container{
   width:94%;
   max-width:1400px;
@@ -112,8 +100,6 @@ body{
   margin:0;
   color:#777;
 }
-
-/* PRODUCTS */
 
 .products{
   display:grid;
@@ -215,8 +201,6 @@ body{
   background:#c5a348;
 }
 
-/* FOOTER */
-
 footer{
   margin-top:45px;
   background:#070707;
@@ -225,11 +209,7 @@ footer{
   padding:30px;
 }
 
-footer strong{
-  color:#d6b45b;
-}
-
-/* MOBILE */
+footer strong{color:#d6b45b}
 
 @media(max-width:1000px){
   .products{
@@ -281,8 +261,6 @@ footer strong{
 
 <body>
 
-<!-- HEADER -->
-
 <header class="header">
 
   <div class="logo">
@@ -305,33 +283,25 @@ footer strong{
 </header>
 
 
-<!-- CATEGORIES -->
-
 <div class="categories">
 
-  <button
-    class="active"
-    onclick="filterProducts('all',this)">
+  <button class="active" onclick="filterProducts('all',this)">
     All
   </button>
 
-  <button
-    onclick="filterProducts('gift',this)">
+  <button onclick="filterProducts('gift',this)">
     Gift Cards
   </button>
 
-  <button
-    onclick="filterProducts('voucher',this)">
+  <button onclick="filterProducts('voucher',this)">
     Vouchers
   </button>
 
-  <button
-    onclick="filterProducts('card',this)">
+  <button onclick="filterProducts('card',this)">
     Cards
   </button>
 
-  <button
-    onclick="filterProducts('virtual',this)">
+  <button onclick="filterProducts('virtual',this)">
     Virtual Cards
   </button>
 
@@ -345,54 +315,44 @@ footer strong{
     <p>Choose your product</p>
   </div>
 
-
   <div class="products" id="products">
 
 
-    <!-- AMAZON GIFT CARD -->
+    <!-- AMAZON -->
 
-    <div
-      class="product"
+    <div class="product"
       data-category="gift"
       data-name="Amazon Gift Card">
 
       <div class="image">
-
         <img
           src="blog-banner_2020-Amazon-LinkeIn_compr.jpg"
           alt="Amazon Gift Card"
           onerror="this.src='cards.png'"
         >
-
       </div>
 
       <div class="info">
 
-        <div class="name">
-          Amazon Gift Card
-        </div>
+        <div class="name">Amazon Gift Card</div>
 
-        <span class="rating">
-          ★ 4.5
-        </span>
+        <span class="rating">★ 4.5</span>
 
         <div class="details">
           Digital Amazon gift card.
         </div>
 
         <div class="balance">
-          Card Balance:
-          <strong>₹500</strong>
+          Card Balance: <strong>₹4,491</strong>
         </div>
 
         <div class="price">
-          ₹500
+          ₹499
           <span class="old">₹550</span>
           <span class="discount">9% off</span>
         </div>
 
-        <button
-          class="buy"
+        <button class="buy"
           onclick="buyProduct('Amazon Gift Card')">
           BUY NOW
         </button>
@@ -403,48 +363,39 @@ footer strong{
 
     <!-- GOOGLE PLAY -->
 
-    <div
-      class="product"
+    <div class="product"
       data-category="voucher"
       data-name="Google Play Voucher">
 
       <div class="image">
-
         <img
           src="gift_voucher.png"
           alt="Google Play Voucher"
           onerror="this.src='cards.png'"
         >
-
       </div>
 
       <div class="info">
 
-        <div class="name">
-          Google Play Voucher
-        </div>
+        <div class="name">Google Play Voucher</div>
 
-        <span class="rating">
-          ★ 4.5
-        </span>
+        <span class="rating">★ 4.5</span>
 
         <div class="details">
           Digital Google Play voucher.
         </div>
 
         <div class="balance">
-          Card Balance:
-          <strong>₹500</strong>
+          Card Balance: <strong>₹6,291</strong>
         </div>
 
         <div class="price">
-          ₹500
-          <span class="old">₹550</span>
-          <span class="discount">9% off</span>
+          ₹699
+          <span class="old">₹750</span>
+          <span class="discount">7% off</span>
         </div>
 
-        <button
-          class="buy"
+        <button class="buy"
           onclick="buyProduct('Google Play Voucher')">
           BUY NOW
         </button>
@@ -455,46 +406,37 @@ footer strong{
 
     <!-- MASTERCARD -->
 
-    <div
-      class="product"
+    <div class="product"
       data-category="card"
       data-name="Mastercard">
 
       <div class="image">
-
         <img
           src="master-card-brac-bank-jpg.png"
           alt="Mastercard"
           onerror="this.src='cards.png'"
         >
-
       </div>
 
       <div class="info">
 
-        <div class="name">
-          Mastercard
-        </div>
+        <div class="name">Mastercard</div>
 
-        <span class="rating">
-          ★ 4.4
-        </span>
+        <span class="rating">★ 4.4</span>
 
         <div class="details">
           Authorized Mastercard service.
         </div>
 
         <div class="balance">
-          Card Balance:
-          <strong>₹1,000</strong>
+          Card Balance: <strong>₹8,991</strong>
         </div>
 
         <div class="price">
-          ₹1,000
+          ₹999
         </div>
 
-        <button
-          class="buy"
+        <button class="buy"
           onclick="buyProduct('Mastercard')">
           BUY NOW
         </button>
@@ -505,46 +447,37 @@ footer strong{
 
     <!-- VIRTUAL CARD -->
 
-    <div
-      class="product"
+    <div class="product"
       data-category="virtual"
       data-name="Virtual Card">
 
       <div class="image">
-
         <img
           src="features_unlimited-virtual-cards__03~2.jpg"
           alt="Virtual Card"
           onerror="this.src='cards.png'"
         >
-
       </div>
 
       <div class="info">
 
-        <div class="name">
-          Virtual Card
-        </div>
+        <div class="name">Virtual Card</div>
 
-        <span class="rating">
-          ★ 4.3
-        </span>
+        <span class="rating">★ 4.3</span>
 
         <div class="details">
           Authorized virtual card service.
         </div>
 
         <div class="balance">
-          Card Balance:
-          <strong>₹1,000</strong>
+          Card Balance: <strong>₹7,591</strong>
         </div>
 
         <div class="price">
-          ₹1,000
+          ₹799
         </div>
 
-        <button
-          class="buy"
+        <button class="buy"
           onclick="buyProduct('Virtual Card')">
           BUY NOW
         </button>
@@ -553,49 +486,163 @@ footer strong{
     </div>
 
 
-    <!-- VISA CARD -->
+    <!-- VISA CLASSIC -->
 
-    <div
-      class="product"
+    <div class="product"
       data-category="card"
-      data-name="Visa Card">
+      data-name="Visa Classic Card">
 
       <div class="image">
-
         <img
           src="card-classic.png"
-          alt="Visa Card"
+          alt="Visa Classic Card"
           onerror="this.src='cards.png'"
         >
-
       </div>
 
       <div class="info">
 
-        <div class="name">
-          Visa Card
-        </div>
+        <div class="name">Visa Classic Card</div>
 
-        <span class="rating">
-          ★ 4.4
-        </span>
+        <span class="rating">★ 4.4</span>
 
         <div class="details">
           Authorized Visa card service.
         </div>
 
         <div class="balance">
-          Card Balance:
-          <strong>₹1,000</strong>
+          Card Balance: <strong>₹8,991</strong>
         </div>
 
         <div class="price">
-          ₹1,000
+          ₹999
         </div>
 
-        <button
-          class="buy"
-          onclick="buyProduct('Visa Card')">
+        <button class="buy"
+          onclick="buyProduct('Visa Classic Card')">
+          BUY NOW
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- VISA PLATINUM -->
+
+    <div class="product"
+      data-category="card"
+      data-name="Visa Platinum Card">
+
+      <div class="image">
+        <img
+          src="Visa-Platinum050722.jpg"
+          alt="Visa Platinum Card"
+          onerror="this.src='cards.png'"
+        >
+      </div>
+
+      <div class="info">
+
+        <div class="name">Visa Platinum Card</div>
+
+        <span class="rating">★ 4.6</span>
+
+        <div class="details">
+          Authorized Visa Platinum service.
+        </div>
+
+        <div class="balance">
+          Card Balance: <strong>₹11,691</strong>
+        </div>
+
+        <div class="price">
+          ₹1,299
+        </div>
+
+        <button class="buy"
+          onclick="buyProduct('Visa Platinum Card')">
+          BUY NOW
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- VISA SIGNATURE -->
+
+    <div class="product"
+      data-category="card"
+      data-name="Visa Signature Card">
+
+      <div class="image">
+        <img
+          src="Visa-Signature-Web-1024x816.png"
+          alt="Visa Signature Card"
+          onerror="this.src='cards.png'"
+        >
+      </div>
+
+      <div class="info">
+
+        <div class="name">Visa Signature Card</div>
+
+        <span class="rating">★ 4.7</span>
+
+        <div class="details">
+          Authorized Visa Signature service.
+        </div>
+
+        <div class="balance">
+          Card Balance: <strong>₹13,491</strong>
+        </div>
+
+        <div class="price">
+          ₹1,499
+        </div>
+
+        <button class="buy"
+          onclick="buyProduct('Visa Signature Card')">
+          BUY NOW
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- CREDIT CARD -->
+
+    <div class="product"
+      data-category="card"
+      data-name="Credit Card">
+
+      <div class="image">
+        <img
+          src="SCU_CREDIT_2.webp"
+          alt="Credit Card"
+          onerror="this.src='cards.png'"
+        >
+      </div>
+
+      <div class="info">
+
+        <div class="name">Credit Card</div>
+
+        <span class="rating">★ 4.5</span>
+
+        <div class="details">
+          Authorized credit card service.
+        </div>
+
+        <div class="balance">
+          Card Balance: <strong>₹10,791</strong>
+        </div>
+
+        <div class="price">
+          ₹1,199
+        </div>
+
+        <button class="buy"
+          onclick="buyProduct('Credit Card')">
           BUY NOW
         </button>
 
@@ -625,8 +672,6 @@ footer strong{
 
 <script>
 
-/* SEARCH */
-
 function searchProducts(){
 
   const value =
@@ -640,27 +685,17 @@ function searchProducts(){
     .forEach(product => {
 
       const name =
-        product
-        .dataset
-        .name
-        .toLowerCase();
+        product.dataset.name.toLowerCase();
 
       product.style.display =
-        name.includes(value)
-        ? ""
-        : "none";
+        name.includes(value) ? "" : "none";
 
     });
 
 }
 
 
-/* FILTER */
-
-function filterProducts(
-  category,
-  button
-){
+function filterProducts(category,button){
 
   document
     .querySelectorAll(".categories button")
@@ -688,13 +723,11 @@ function filterProducts(
 }
 
 
-/* BUY */
-
 function buyProduct(name){
 
   alert(
     name +
-    " selected. The authorized purchase/payment flow will be connected here."
+    " selected. Purchase flow will be connected here."
   );
 
 }
