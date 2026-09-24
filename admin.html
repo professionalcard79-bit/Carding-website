@@ -152,7 +152,6 @@ button:disabled{
   flex-wrap:wrap;
 }
 
-
 /* SUCCESS OVERLAY */
 
 .success-overlay{
@@ -265,7 +264,6 @@ button:disabled{
 <div class="logo">CARD<span>ING</span> ADMIN</div>
 </div>
 </header>
-
 
 <main class="container">
 
@@ -392,12 +390,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* FIREBASE CONFIG */
+/* FIREBASE CONFIG — CORRECT */
 
 const firebaseConfig = {
 
   apiKey:
-  "AIzaSyC8-pN9Jg4BXOH9dHsWyH_wHjjr_iXekox",
+  "AIzaSyC8-pN9Jg4BX0H9Os2HsY_wHjjr_jXexok",
 
   authDomain:
   "carding-website-87a10.firebaseapp.com",
@@ -409,10 +407,13 @@ const firebaseConfig = {
   "carding-website-87a10.firebasestorage.app",
 
   messagingSenderId:
-  "105806699328",
+  "1058006993928",
 
   appId:
-  "1:105806699328:web:cb43d3d46e42d256655"
+  "1:1058006993928:web:cb43cdd346e42d256655bd",
+
+  measurementId:
+  "G-R7P99KNG19"
 
 };
 
@@ -528,7 +529,7 @@ onAuthStateChanged(
 
 
     if(
-      user.email.toLowerCase() !==
+      (user.email || "").toLowerCase() !==
       ADMIN_EMAIL.toLowerCase()
     ){
 
@@ -738,10 +739,8 @@ window.changeStatus = async function(
     );
 
 
-    loadApplications();
+    await loadApplications();
 
-
-    /* SHOW SUCCESS ONLY AFTER APPROVAL */
 
     if(newStatus === "Approved"){
 
